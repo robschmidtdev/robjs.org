@@ -1,0 +1,17 @@
+body {
+    background-image: url('background.svg');
+    background-position: center;
+  }
+
+
+  img {
+    width: 100%;
+    height: auto;
+    max-width: 500px;  /* Set a max width on larger screens */
+  }
+  
+  @media (max-width: 767px) {
+    img {
+      max-width: 300px;  /* Set a smaller max width on mobile */
+    }
+  }
