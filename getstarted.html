@@ -31,7 +31,7 @@
             <a class="nav-link" href="getstarted.html">Get Started</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Examples</a>
+            <a class="nav-link" href="examples.html">Examples</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="discussion.html">Discussion</a>
@@ -68,7 +68,7 @@
     &lt;title&gt;App&lt;/title&gt;
 &lt;/head&gt;
 &lt;body&gt;
-    &lt;p&gt;Some static html that stays unaffected and can help SEO&lt;/p&gt;
+    &lt;p&gt;Static html that stays unaffected and can help SEO&lt;/p&gt;
     &lt;div id="myapp"&gt;&lt;/div&gt;
     &lt;script type="module" src="app.js"&gt;&lt;/script&gt;
 &lt;/body&gt;
@@ -78,34 +78,47 @@
 
     <p class="mb-4">3. Create the JavaScript file according to your script tag. In this case we call it app.js.</p>
 
-    <p class="mb-4">4. In app.js, initialize the app, define state variables, views and routes like shown below.</p>
+    <p class="mb-4">4. In app.js, initialize the app, define state variables, components and render the initial view like shown below.
+    </p>
 
     <pre>
     <code class="language-javascript">
 // app.js
-import { RobJS } from "./RobJS.js";
-import { Home } from "./views/home.js";
-import { About } from "./views/about.js";
+import { RobJSApp } from "./Rob.js";
 
-const app = new RobJS('myapp'); // your tag id
+const app = new RobJSApp('myapp'); // your tag id
 app.init('app') // pass same name as your app variable as argument
 
-// Define state variables (name, initial value)
+// Define a state variable, pass a name and initial value
 app.defineStateVar('count', 0);
-app.defineStateVar('data', []);
-    
-// Define views
-app.defineView('home', Home);
-app.defineView('about', About);
 
-// Register the view routes
-app.route('/home', 'home');
-app.route('/about', 'about');
+// Define a component as a function (recommend: do this in a separate file and import it here)
+const Counter = () => {
+  return `
+    &lt;div class="Counter"&gt; 
+      &lt;button href="#" onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+      ${app.state.count}
+      &lt;button href="#" onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  `;
+};
 
-// Start at home
-app.navigate('/home');
+// Register the component, pass the component function, the classname and an array of state variables it listens to
+app.defineComponent(Counter, 'Counter', ['count'])
+
+// Start your app with an initial render of the component
+app.render(Counter) 
     </code>
     </pre>
+
+    <p class="mb-4">5. Done. Try it out by opening the index.html-file with your browser.</p>
+    <p class="mb-4">6. To see more examples like building a menu, getting data from an API, conditional rendering etc. go to <a href="examples.html">Examples</a>.</p>
+    <p class="mb-4">7. To see an example of a fully functional CRUD frontend app, take a look at <a href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/"  target="_blank">Simple Todo App made with RobJS</a>
+    and its corresponding <a href="https://github.com/robschmidtinfo/simple-todo-app-made-with-robjs"  target="_blank">GitHub-Repository</a>.</p>
+
+
+    
+
     
 
 
