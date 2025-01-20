@@ -96,9 +96,9 @@ app.defineStateVar('count', 0);
 const Counter = () => {
   return `
     &lt;div class="Counter"&gt; 
-      &lt;button href="#" onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+      &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
       ${app.state.count}
-      &lt;button href="#" onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+      &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
     &lt;/div&gt;
   `;
 };
