@@ -52,57 +52,53 @@
       <div class="text-bg-dark text-white p-4 mb-2">
         <h1 class="mb-4">Discussion</h1>
         <p>
-          This framework is intentionally build as simple as possible. 
-          As a developer you feel trouble publishing it as it seems like "nothing". 
-          But isnt that actually what we want from a framework?
-          <br> We need to clarify: 
+          This Framework is intentionally build as simple as possible.<br>
+          But isn't that actually what we want from a Framework?<br>
+          We need to clarify: 
         </p>
-        <h2>What is a framework?</h2>
-        <p>A framework is actually just a "way of doing things". So if you build an application using only the core language, you will most likely build a framework, too.
+        <h2>What is a Framework?</h2>
+        <p>A Framework is actually just a "way of doing things". So if you build an application using only the core language, you will most likely build a Framework, too.
           Because you will do things a certain way. <br>
-          If you then build another app you might orientate yourself partly on the app you build before and copy some parts. These parts are your framework.
+          If you then build another app you might orientate yourself partly on the app you build before and copy some parts. These parts are your Framework.
 
           <h2>What is the problem?</h2>
-          <p>Today there are so many frameworks - ecspecially in the JavaScript World.</p>
+          <p>Today there are so many Frameworks - ecspecially in the JavaScript World.</p>
           ... you lose functionality or at least you have to apply a different way of logical thinking to get certain things done 
-          (that are not a foreseen way of the framework). you operate with your hands behind a curtain
+          (that are not a foreseen way of the Framework). you operate with your hands behind a curtain
           ... you are not the one who created it. you must learn their way. Some might like it, some dont? 
         </p>
-        <h2>We have enough complicated frameworks we don't really understand</h2>
-        <h2>RobJS is a framework that is very easy to understand - on purpose</h2>
-        <h2>And you can and should break out and change the core if you need to</h2>
-        <h2>Understand every line of it</h2>
-        <p>We go through the whole implementation of it now and explain every line so that you - the developer - are really back into the driver seat where you belong.</p>
+        <h2>We have enough complicated Frameworks we don't really understand</h2>
+        <h2>RobJS is easy to understand - on purpose</h2>
+        <p>By going now through the whole implementation line by line you will be able to fully understand how it works under the hood.<br>
+          And you might be surprised how simple it actually is. You will also understand the drawbacks and might be able to work around it.<br>
+          After that you are really back into the drivers seat and have even the guts to break out and change the core if needed.
+        </p>
+        <p>Lets dive in:</p>
+
         <pre>
         <code class="language-javascript">
-// The whole Code is wrapped inside a class that gives you later an instance of your app. 
+// Everything is wrapped inside a class that gives you later an instance of your app. 
 // You can console.log this instance at any time and see whats in it which makes it very easy to debug.
 // We export this class to make it available in other files of our project to keep everything organized.
-
-export class RobJSApp { ... }
-        </code>
-        </pre>
-
-        <pre>
-        <code class="language-javascript">
+          
 export class RobJSApp {
 
-  // When instantiating a new RobJSApp we assign our tagId. This is needed to render your app inside the div tag of the html file. 
-  // This gives you the freedom to show your app where you want and even multiple times.
-  // Further an empty state object, an empty oldState object and and empty array called components is created that we will need later.
+  // When instantiating a new RobJSApp we assign the tagId. This is needed to later render your app inside the tag of the html file. 
+  // This gives you the freedom to show your app where you want in the DOM.
+  // Further an empty state object, an empty oldState object and and empty array called components is created.
 
   constructor(tagId) {
     this.tagId = tagId
-    this.state = {};
-    this.oldState = {};
-    this.components = [];
+    this.state = {}
+    this.oldState = {}
+    this.components = []
   }
   
   ...
 }
 
 // usage
-const app = new RobJSApp('myapp')
+const app = new RobJSApp('myapp') // assuming you gave the tag in your html file an id of 'myapp' 
 console.log(app)
     </code>
     </pre>
@@ -133,9 +129,14 @@ app.init('app')
 export class RobJSApp {
   ...
 
-  // We use this function to create an entry into our state object with a key and a inital value you can define by yourself.
+  // We use this function to create an entry into our state object with a key and a inital value.
+  // We do the same to the old state object to make it available there as well.
+  // You can create state variables in all possible fashions (see usage).
 
-  defineStateVar(key, initialValue) { this.state[key] = initialValue }
+  defineStateVar(key, initialValue) { 
+    this.state[key] = initialValue 
+    this.oldState[key] = initialValue 
+  }
 
   ...
 }
@@ -155,9 +156,9 @@ app.defineStateVar('data', [{'name': 'Jane', 'age': 23}, {...}, ...])
 export class RobJSApp {
   ...
 
-  // We use this function to register an component into our app.
+  // We use this function to register an component to our app.
   // We must pass the viewFunction which is essentially an JavaScript function returning html (we call this 'component').
-  // We must wrap it inside a div and give it a classname, because the app will find this component later by that classname in the DOM to update it.
+  // We must wrap it inside a div and give it a classname, because the Framework will find this component later by that classname in the DOM to update it.
   // Further we can decide on which changes of state it should re-render by passing an array with the names of the state variables. 
   // Oftentimes these would be at least the state variables that are used in the component but it is not limited to that.
 
@@ -166,17 +167,22 @@ export class RobJSApp {
 }
 
 // usage
-// first create a component
+// define state variables the component consumes
+app.defineStateVar('name', 'Janis')
+app.defineStateVar('age', 30)
+
+// create a component
 const MyComponent () => {
   return `
     &lt;div class="MyComponent"&gt; 
-      &lt;p&gt;${app.state.name}&lt;/p&gt; 
+      &lt;p&gt;${app.state.name}&lt;/p&gt;
+      &lt;p&gt;${app.state.age}&lt;/p&gt;  
     &lt;/div&gt;
   `;
 };
 
 // then register it
-app.registerComponent(MyComponent, 'MyComponent', ['name'])
+app.registerComponent(MyComponent, 'MyComponent', ['name', 'age'])
       </code>
       </pre>
 
@@ -212,11 +218,11 @@ export class RobJSApp {
   // For all that are found, we find them in the DOM by their classname and re-render them by calling the viewFunction.
   // The drawback here is that it will be rendered again inside the old div tag with the same classname. 
   // So if you would take a look into the DOM you would suddenly find a div inside a div. 
-  // The reason to let it have that "misbehaviour" is that it doesn't (usually) hurt and keeps things so much simpler.
+  // The reason to let it have that 'misbehaviour' is that it doesn't (usually) hurt and keeps things simpler.
 
   updateState(key, newValue) {
-    this.oldState = this.state;
-    this.state = { ...this.state, [key]: newValue };
+    this.oldState = this.state
+    this.state = { ...this.state, [key]: newValue }
     this.components
         .filter(comp => comp.usedStateKeys.includes(key))
         .forEach(comp =>
@@ -244,11 +250,20 @@ const Counter = () => {
     </code>
     </pre>
 
+    <div class="text-bg-dark text-white p-4 mb-2">
+      <p>And that is all there is to it. Roughly 30 lines of code. Elegant and powerful.</p>
+    </div>
+
       </div>
 
       <div class="mt-5 p-4 bg-dark text-white text-center">
-        <p>© 2025 - RobJS.org - All rights reserved</p>
+        <p>© <span id="year"></span> - RobJS.org - All rights reserved</p>
       </div>
+      <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+      </script>
+
       <script src="prism.js"></script>
+      
 </body>
 </html>

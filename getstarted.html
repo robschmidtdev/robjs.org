@@ -84,13 +84,13 @@
     <pre>
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
+import { RobJSApp } from "./Rob.js"
 
-const app = new RobJSApp('myapp'); // your tag id
+const app = new RobJSApp('myapp') // pass your tag id
 app.init('app') // pass same name as your app variable as argument
 
 // Define a state variable, pass a name and initial value
-app.defineStateVar('count', 0);
+app.defineStateVar('count', 0)
 
 // Define a component as a function (recommend: do this in a separate file and import it)
 // The component should update automatically when the state changes 
@@ -98,7 +98,7 @@ app.defineStateVar('count', 0);
 const Counter = () => {
 
   console.log(app.oldState.count) // the old state is available, too
-  
+
   return `
     &lt;div class="Counter"&gt; 
       &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
@@ -123,8 +123,11 @@ app.render(Counter)
     </div>
     
     <div class="mt-5 p-4 bg-dark text-white text-center">
-      <p>© 2025 - RobJS.org - All rights reserved</p>
+      <p>© <span id="year"></span> - RobJS.org - All rights reserved</p>
     </div>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 
     <script src="prism.js"></script>
 </body>

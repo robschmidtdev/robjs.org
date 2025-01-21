@@ -57,8 +57,11 @@
   
     
     <div class="mt-5 p-4 bg-dark text-white text-center">
-      <p>© 2025 - RobJS.org - All rights reserved</p>
+      <p>© <span id="year"></span> - RobJS.org - All rights reserved</p>
     </div>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 
     <script src="prism.js"></script>
 </body>

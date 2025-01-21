@@ -71,7 +71,10 @@
     <p class="text-bg-dark text-white p-4">Whether you are prototyping a quick idea or crafting a focused application, RobJS gives you the tools to move fast, with minimal overhead but maximum clarity!</p>
 
     <div class="mt-5 p-4 bg-dark text-white text-center">
-      <p>© 2025 - RobJS.org - All rights reserved</p>
+      <p>© <span id="year"></span> - RobJS.org - All rights reserved</p>
     </div>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
