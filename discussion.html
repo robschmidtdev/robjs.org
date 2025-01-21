@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="mystyle.css">
+    <link href="prism.css" rel="stylesheet" />
     <title>RobJS.org</title>
 </head>
 <body class="container">
@@ -36,7 +37,7 @@
                 <a class="nav-link" href="discussion.html">Discussion</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="about.html">About</a>
               </li>
               <li class="nav-item">
                 <a href="paypal" target="_blank">
@@ -47,7 +48,207 @@
           </div>
         </div>
       </nav>
-    <br>
-    <p class="text-bg-light p-4">Discussion</p>
+
+      <div class="text-bg-dark text-white p-4 mb-2">
+        <h1 class="mb-4">Discussion</h1>
+        <p>
+          This framework is intentionally build as simple as possible. 
+          As a developer you feel trouble publishing it as it seems like "nothing". 
+          But isnt that actually what we want from a framework?
+          <br> We need to clarify: 
+        </p>
+        <h2>What is a framework?</h2>
+        <p>A framework is actually just a "way of doing things". So if you build an application using only the core language, you will most likely build a framework, too.
+          Because you will do things a certain way. <br>
+          If you then build another app you might orientate yourself partly on the app you build before and copy some parts. These parts are your framework.
+
+          <h2>What is the problem?</h2>
+          <p>Today there are so many frameworks - ecspecially in the JavaScript World.</p>
+          ... you lose functionality or at least you have to apply a different way of logical thinking to get certain things done 
+          (that are not a foreseen way of the framework). you operate with your hands behind a curtain
+          ... you are not the one who created it. you must learn their way. Some might like it, some dont? 
+        </p>
+        <h2>We have enough complicated frameworks we don't really understand</h2>
+        <h2>RobJS is a framework that is very easy to understand - on purpose</h2>
+        <h2>And you can and should break out and change the core if you need to</h2>
+        <h2>Understand every line of it</h2>
+        <p>We go through the whole implementation of it now and explain every line so that you - the developer - are really back into the driver seat where you belong.</p>
+        <pre>
+        <code class="language-javascript">
+// The whole Code is wrapped inside a class that gives you later an instance of your app. 
+// You can console.log this instance at any time and see whats in it which makes it very easy to debug.
+// We export this class to make it available in other files of our project to keep everything organized.
+
+export class RobJSApp { ... }
+        </code>
+        </pre>
+
+        <pre>
+        <code class="language-javascript">
+export class RobJSApp {
+
+  // When instantiating a new RobJSApp we assign our tagId. This is needed to render your app inside the div tag of the html file. 
+  // This gives you the freedom to show your app where you want and even multiple times.
+  // Further an empty state object, an empty oldState object and and empty array called components is created that we will need later.
+
+  constructor(tagId) {
+    this.tagId = tagId
+    this.state = {};
+    this.oldState = {};
+    this.components = [];
+  }
+  
+  ...
+}
+
+// usage
+const app = new RobJSApp('myapp')
+console.log(app)
+    </code>
+    </pre>
+
+    <pre>
+    <code class="language-javascript">
+export class RobJSApp {
+  ...
+
+  // This line of code makes your app variable available in the whole project.
+  // The window object is the global object in browser-based JavaScript environments. Adding properties to window essentially creates global variables.
+  // A drawback to this is that you could overwrite it accidentially so be aware of that.
+
+  init(app){ window[app] = this }
+
+  ...
+}
+
+// usage
+const app = new RobJSApp('myapp')
+app.init('app')
+
+    </code>
+    </pre>
+
+  <pre>
+  <code class="language-javascript">
+export class RobJSApp {
+  ...
+
+  // We use this function to create an entry into our state object with a key and a inital value you can define by yourself.
+
+  defineStateVar(key, initialValue) { this.state[key] = initialValue }
+
+  ...
+}
+
+// usage
+app.defineStateVar('count', 0)
+app.defineStateVar('name', 'John')
+app.defineStateVar('list', ['a', 'b', 'c'])
+app.defineStateVar('isGreat', true)
+app.defineStateVar('data', [{'name': 'Jane', 'age': 23}, {...}, ...])
+
+    </code>
+    </pre>
+
+    <pre>
+    <code class="language-javascript">
+export class RobJSApp {
+  ...
+
+  // We use this function to register an component into our app.
+  // We must pass the viewFunction which is essentially an JavaScript function returning html (we call this 'component').
+  // We must wrap it inside a div and give it a classname, because the app will find this component later by that classname in the DOM to update it.
+  // Further we can decide on which changes of state it should re-render by passing an array with the names of the state variables. 
+  // Oftentimes these would be at least the state variables that are used in the component but it is not limited to that.
+
+  registerComponent(viewFunction, className, usedStateKeys) { this.components.push({viewFunction, className, usedStateKeys}) }
+  ...
+}
+
+// usage
+// first create a component
+const MyComponent () => {
+  return `
+    &lt;div class="MyComponent"&gt; 
+      &lt;p&gt;${app.state.name}&lt;/p&gt; 
+    &lt;/div&gt;
+  `;
+};
+
+// then register it
+app.registerComponent(MyComponent, 'MyComponent', ['name'])
+      </code>
+      </pre>
+
+    <pre>
+    <code class="language-javascript">
+export class RobJSApp {
+  ...
+
+  // The render function is mainly used to render the app for the first time into the html element with our tagId. 
+  // Usually it would do so with the component that wraps all other components and is the main entry point.
+  // So pass the component that you want to see when the page is loaded.
+
+  render(viewFunction) { document.getElementById(this.tagId).innerHTML = viewFunction() }
+  ...
+}
+
+// usage
+app.render(MyComponent)
+
+    </code>
+    </pre>
+
+    <pre>
+    <code class="language-javascript">
+export class RobJSApp {
+  ...
+
+  // The final thing is to manage the automatic update on state changes.
+  // We need to call this function whenever we want a re-render to happen.
+  // Pass the key or name of the state variable and the new value it should get.
+  // Notice that we create an old state by copying the current state before performing the update.
+  // Then we filter all the registered components to find the ones that listen to updates of this particular state variable (as defined before in registerComponent()).
+  // For all that are found, we find them in the DOM by their classname and re-render them by calling the viewFunction.
+  // The drawback here is that it will be rendered again inside the old div tag with the same classname. 
+  // So if you would take a look into the DOM you would suddenly find a div inside a div. 
+  // The reason to let it have that "misbehaviour" is that it doesn't (usually) hurt and keeps things so much simpler.
+
+  updateState(key, newValue) {
+    this.oldState = this.state;
+    this.state = { ...this.state, [key]: newValue };
+    this.components
+        .filter(comp => comp.usedStateKeys.includes(key))
+        .forEach(comp =>
+            document.querySelectorAll(`.${comp.className}`)
+                .forEach(el => el.innerHTML = comp.viewFunction())
+        );
+  }
+  ...
+}
+
+// usage
+const Counter = () => {
+
+  console.log(app.oldState.count) // oldState is available in your project
+
+  return `
+    &lt;div class="Counter"&gt; 
+      &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+      ${app.state.count}
+      &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  `;
+};
+
+    </code>
+    </pre>
+
+      </div>
+
+      <div class="mt-5 p-4 bg-dark text-white text-center">
+        <p>© 2025 - RobJS.org - All rights reserved</p>
+      </div>
+      <script src="prism.js"></script>
 </body>
 </html>

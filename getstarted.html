@@ -37,7 +37,7 @@
             <a class="nav-link" href="discussion.html">Discussion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="about.html">About</a>
           </li>
           <li class="nav-item">
             <a href="paypal" target="_blank">
@@ -92,8 +92,13 @@ app.init('app') // pass same name as your app variable as argument
 // Define a state variable, pass a name and initial value
 app.defineStateVar('count', 0);
 
-// Define a component as a function (recommend: do this in a separate file and import it here)
+// Define a component as a function (recommend: do this in a separate file and import it)
+// The component should update automatically when the state changes 
+// -> Therefore you must wrap the returning html in a div and give it a classname
 const Counter = () => {
+
+  console.log(app.oldState.count) // the old state is available, too
+  
   return `
     &lt;div class="Counter"&gt; 
       &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
@@ -104,7 +109,7 @@ const Counter = () => {
 };
 
 // Register the component, pass the component function, the classname and an array of state variables it listens to
-app.defineComponent(Counter, 'Counter', ['count'])
+app.registerComponent(Counter, 'Counter', ['count'])
 
 // Start your app with an initial render of the component
 app.render(Counter) 
@@ -115,29 +120,12 @@ app.render(Counter)
     <p class="mb-4">6. To see more examples like building a menu, getting data from an API, conditional rendering etc. go to <a href="examples.html">Examples</a>.</p>
     <p class="mb-4">7. To see an example of a fully functional CRUD frontend app, take a look at <a href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/"  target="_blank">Simple Todo App made with RobJS</a>
     and its corresponding <a href="https://github.com/robschmidtinfo/simple-todo-app-made-with-robjs"  target="_blank">GitHub-Repository</a>.</p>
-
-
-    
-
-    
-
-
-
-
     </div>
-    
-
-  
     
     <div class="mt-5 p-4 bg-dark text-white text-center">
       <p>© 2025 - RobJS.org - All rights reserved</p>
     </div>
 
     <script src="prism.js"></script>
-
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script> -->
-    <!-- Prism.js Language Plugin -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-html.min.js"></script> -->
 </body>
 </html>
