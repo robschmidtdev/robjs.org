@@ -4,7 +4,7 @@ const MenuPoint2 = () => `<h1>MenuPoint2</h1>`;
 export const Menu = () => {
 
     let menupoint
-    if (app.state.menu === 'menuPoint1') {
+    if (example2.state.menu === 'menuPoint1') {
         menupoint = MenuPoint1()
     } else {
         menupoint = MenuPoint2()
@@ -14,10 +14,10 @@ export const Menu = () => {
       <div class="Menu">
         <ul class="nav nav-pills">
             <li class="nav-item me-1">
-                <a style="cursor: pointer;" class="nav-link active" onclick="app.updateState('menu', 'menuPoint1')">MenuPoint1</a>
+                <a style="cursor: pointer;" class="nav-link active" onclick="example2.updateState('menu', 'menuPoint1')">MenuPoint1</a>
             </li>
             <li>
-                <a style="cursor: pointer;" class="nav-link active" onclick="app.updateState('menu', 'menuPoint2')">MenuPoint2</a>
+                <a style="cursor: pointer;" class="nav-link active" onclick="example2.updateState('menu', 'menuPoint2')">MenuPoint2</a>
             </li>
         </ul>
         <span class="text-dark">${menupoint}</span>

@@ -34,9 +34,9 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Examples</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Example: Conditional Rendering</a></li>
+              <li><a class="dropdown-item" href="example1.html">Example: Conditional Rendering</a></li>
               <li><a class="dropdown-item" href="#">Example: Dropdown and Checkboxes</a></li>
-              <li><a class="dropdown-item" href="examplemenu.html">Example: Menu</a></li>
+              <li><a class="dropdown-item" href="example2.html">Example: Menu</a></li>
               <li><a class="dropdown-item" href="#">Example: Component Composing</a></li>
               <li><a class="dropdown-item" href="#">Example: Fetching Data</a></li>
               <li><a class="dropdown-item" href="#">Example: Heavy Functions</a></li>
@@ -100,13 +100,10 @@ app.init('app') // pass same name as your app variable as argument
 // Define a state variable, pass a name and initial value
 app.defineStateVar('count', 0)
 
-// Define a component as a function (recommend: do this in a separate file and import it)
+// Define a component as a normal JavaScript function that returns an html string (recommend: do this in a separate file and import it)
 // The component should update automatically when the state changes 
 // -> Therefore you must wrap the returning html in a div and give it a classname
 const Counter = () => {
-
-  console.log(app.oldState.count) // the old state is available, too
-
   return `
     &lt;div class="Counter"&gt; 
       &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
@@ -125,18 +122,16 @@ app.render(Counter)
     </pre>
 
     <p class="mb-4">5. Done. Try it out by opening the index.html-file with your browser. You should see something like this
-      (but without styling).<br>
-      If you open the console of this browser, you will also see the old state of the counter.<br>
-      We learned how to set up a project, create and change a state variable, create a component and render it initially.
-    </p>
+      (but without styling).</p>
 
     <div class="bg-light p-4 text-center mb-4">
       <div id="getstarted"></div>
     </div>
     <script type="module" src="getstarted.js"></script>
 
-    <p class="mb-4">6. To see more examples like building a menu, talking to an API, conditional rendering etc. check out the examples.</p>
-    <p class="mb-4">7. To see an example of a fully functional CRUD frontend app, take a look at <a href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/"  target="_blank">Simple Todo App made with RobJS</a>
+    <p class="mb-4">6. We learned how to set up a project, create and change a state variable, create a component and render it initially.</p>
+    <p class="mb-4">7. To see further demonstrations like building a menu, talking to an API, conditional rendering etc. check out the examples.</p>
+    <p class="mb-4">8. To see an example of a fully functional CRUD frontend app, take a look at <a href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/"  target="_blank">Simple Todo App made with RobJS</a>
     and its corresponding <a href="https://github.com/robschmidtinfo/simple-todo-app-made-with-robjs"  target="_blank">GitHub-Repository</a>.</p>
     </div>
     

@@ -34,9 +34,9 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Examples</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Example: Conditional Rendering</a></li>
+              <li><a class="dropdown-item" href="example1.html">Example: Conditional Rendering</a></li>
               <li><a class="dropdown-item" href="#">Example: Dropdown and Checkboxes</a></li>
-              <li><a class="dropdown-item" href="examplemenu.html">Example: Menu</a></li>
+              <li><a class="dropdown-item" href="example2.html">Example: Menu</a></li>
               <li><a class="dropdown-item" href="#">Example: Component Composing</a></li>
               <li><a class="dropdown-item" href="#">Example: Fetching Data</a></li>
               <li><a class="dropdown-item" href="#">Example: Heavy Functions</a></li>
@@ -57,8 +57,8 @@
 
   <br>
   <div class="text-bg-dark text-white p-4 mb-2">
-    <h1 class="mb-4">Example: Menu</h1>
-    <p class="mb-2">In this example we build a simple menu with RobJS.</p>
+    <h1 class="mb-4">Example: Conditional Rendering</h1>
+    <p class="mb-2">In this example we change the appearance of the UI based on the current state.</p>
     <p>1. Start with the usual index.html-file where you define a div-Tag with an id of your choice.</p>
     <pre class="mb-4">
     <code class="language-html">
@@ -73,60 +73,49 @@
     <code class="language-javascript">
 // app.js
 import { RobJSApp } from "./Rob.js";
-import { Menu } from "./Menu.js";
+import { Counter } from "./Counter.js";
 
 const app = new RobJSApp('myapp');
 app.init('app')
-app.defineStateVar('menu', 'menuPoint1');
-app.registerComponent(Menu, 'Menu', ['menu'])
-app.render(Menu)  
+app.defineStateVar('count', 0);
+app.registerComponent(Counter, 'Counter', ['count'])
+app.render(Counter)  
     </code>
     </pre>
 
-    <p class="mb-4">3. Create a file called Menu.js where we define three components.</p>
+    <p class="mb-4">3. Create a component called Counter.js and in there we create a style variable that depends on the current count value.</p>
     <pre class="mb-4">
     <code class="language-javascript">
-// Menu.js
+// Counter.js
+const Counter = () => {
 
-/*
-In this simple example these two menu points do not need to be registered as a component as they do not contain state variables.
-In a real project these would probably be bigger and composed components and would reside most likely in their own seperate files.
-*/
-const MenuPoint1 = () => `&lt;h1&gt;MenuPoint1&lt;/h1&gt;`;
-const MenuPoint2 = () => `&lt;h1&gt;MenuPoint2&lt;/h1&gt;`;
-
-export const Menu = () => {
-
-    let menupoint
-    if (app.state.menu === 'menuPoint1') {
-        menupoint = MenuPoint1()
+    let style = "padding: 5px; border-radius: 5px;"
+    if(app.state.count >= 3 && app.state.count < 6){
+      style = style += "background-color: green;"
+    } else if (app.state.count >= 6){
+      style = style += "background-color: red;"
     } else {
-        menupoint = MenuPoint2()
+      style = style += "background-color: yellow;"
     }
-        
+  
     return `
-        &lt;div class="Menu"&gt;
-        &lt;ul&gt;
-            &lt;li>
-                &lt;a onclick="app.updateState('menu', 'menuPoint1')">MenuPoint1&lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;
-                &lt;a onclick="app.updateState('menu', 'menuPoint2')">MenuPoint2&lt;/a&gt;
-            &lt;/li&gt;
-        &lt;/ul&gt;
-        ${menupoint}
-        &lt;/div&gt;
-    `
+      &lt;div class="Counter"&gt;
+        &lt;p style="${style}"&gt;I turn green after count is 3 and red after count is 6.&lt;/p&gt;
+        &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+        ${app.state.count}
+        &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+      &lt;/div&gt;
+    `;
 };
     </code>
     </pre>
 
-    <p class="mb-4">4. With a bit of styling it looks and works like this.</p>
+    <p class="mb-4">4. With a bit of styling of the buttons it looks and works like this.</p>
 
     <div class="bg-light p-4 text-center mb-4">
-      <div id="examplemenu"></div>
+      <div id="example1"></div>
     </div>
-    <script type="module" src="./examples/examplemenu/app.js"></script>
+    <script type="module" src="./examples/example1/example1.js"></script>
 
 
     
