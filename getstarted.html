@@ -17,6 +17,7 @@
   <div class="text-bg-dark text-white p-4">
     <h2>The Minimalists JavaScript Framework</h2>
   </div>
+
   <nav class="navbar navbar-expand-sm bg-light navbar-light">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,24 +31,30 @@
           <li class="nav-item">
             <a class="nav-link" href="getstarted.html">Get Started</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="examples.html">Examples</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Examples</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Example: Conditional Rendering</a></li>
+              <li><a class="dropdown-item" href="#">Example: Dropdown and Checkboxes</a></li>
+              <li><a class="dropdown-item" href="examplemenu.html">Example: Menu</a></li>
+              <li><a class="dropdown-item" href="#">Example: Component Composing</a></li>
+              <li><a class="dropdown-item" href="#">Example: Fetching Data</a></li>
+              <li><a class="dropdown-item" href="#">Example: Heavy Functions</a></li>
+              <li><a class="dropdown-item" href="#">Example: Mimic useEffect</a></li>
+              <li><a class="dropdown-item" href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/" target="_blank">Example: Simple Todo App</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="discussion.html">Discussion</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="about.html">About</a>
-          </li>
-          <li class="nav-item">
-            <a href="paypal" target="_blank">
-              <button class="btn btn-warning">Donate</button>
-            </a>
+            <a class="nav-link" href="https://robjs.creator-spring.com/" target="_blank">Merch</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+
   <br>
   <div class="text-bg-dark text-white p-4 mb-2">
     <h1 class="mb-4">Get Started</h1>
@@ -61,6 +68,7 @@
     <p>2. Start with a usual index.html-file where you define a div-Tag with an id of your choice. Add a script-tag pointing to a JavaScript-file in your project folder. Name it as you like.</p>
     <pre class="mb-4">
     <code class="language-html">
+&lt;!-- index.html --&gt;
 &lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
 &lt;head&gt;
@@ -81,7 +89,7 @@
     <p class="mb-4">4. In app.js, initialize the app, define state variables, components and render the initial view like shown below.
     </p>
 
-    <pre>
+    <pre class="mb-4">
     <code class="language-javascript">
 // app.js
 import { RobJSApp } from "./Rob.js"
@@ -116,8 +124,18 @@ app.render(Counter)
     </code>
     </pre>
 
-    <p class="mb-4">5. Done. Try it out by opening the index.html-file with your browser.</p>
-    <p class="mb-4">6. To see more examples like building a menu, getting data from an API, conditional rendering etc. go to <a href="examples.html">Examples</a>.</p>
+    <p class="mb-4">5. Done. Try it out by opening the index.html-file with your browser. You should see something like this
+      (but without styling).<br>
+      If you open the console of this browser, you will also see the old state of the counter.<br>
+      We learned how to set up a project, create and change a state variable, create a component and render it initially.
+    </p>
+
+    <div class="bg-light p-4 text-center mb-4">
+      <div id="getstarted"></div>
+    </div>
+    <script type="module" src="getstarted.js"></script>
+
+    <p class="mb-4">6. To see more examples like building a menu, talking to an API, conditional rendering etc. check out the examples.</p>
     <p class="mb-4">7. To see an example of a fully functional CRUD frontend app, take a look at <a href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/"  target="_blank">Simple Todo App made with RobJS</a>
     and its corresponding <a href="https://github.com/robschmidtinfo/simple-todo-app-made-with-robjs"  target="_blank">GitHub-Repository</a>.</p>
     </div>
