@@ -1,47 +1,33 @@
 // Form.js
 
-export const submit = () => {
-  // Get the values of the email and password inputs
-  const emailInput = document.getElementById("email")
-  const passwordInput = document.getElementById("pwd")
-
-  const txtInput = document.getElementById("txt")
-  const txt = txtInput.value
-  console.log(txt)
-  txtInput.value = ""
-  txtInput.blur()
-
-  const email = emailInput.value
-  const password = passwordInput.value
+export const post = () => {
+  // Get the values of the name and message inputs
+  const nameInput = document.getElementById("name")
+  const name = nameInput.value
+  const messageInput = document.getElementById("message")
+  const message = messageInput.value
 
   // make f.e. an API call to perform a login
-  console.log("Email:", email)
-  console.log("Password:", password)
+  console.log(name)
+  console.log(message)
 
   // Clear the input fields
-  emailInput.value = ""
-  passwordInput.value = ""
-
-  emailInput.blur();
-  passwordInput.blur();
+  nameInput.value = ""
+  nameInput.blur()
+  messageInput.value = ""
+  messageInput.blur()
 }
 
 export const Form = () => {
     return `
       <div class="Form">
         <div class="mb-3 mt-3">
-          <label for="email" class="form-label text-dark">Email:</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+          <input type="text" class="form-control" id="name" placeholder="Enter name">
         </div>
         <div class="mb-3">
-          <label for="pwd" class="form-label text-dark">Password:</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+          <textarea class="form-control" rows="2" id="message" placeholder="Enter your message"></textarea>
         </div>
-        <button class="btn btn-primary" onclick="example4.Form.submit()">Login</button> <!-- used here -->
-        <div class="mb-3">
-          <label for="txt" class="form-label text-dark">txt:</label>
-          <input type="text" class="form-control" id="txt" placeholder="Enter txt" name="pswd">
-        </div>
+        <button class="btn btn-primary" onclick="example4.Form.post()">Post</button> <!-- used here -->
       </div>
     `
 };

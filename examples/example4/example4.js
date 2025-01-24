@@ -1,5 +1,5 @@
 import { RobJSApp } from "../../Rob.js";
-import { Form, submit } from "./Form.js";
+import { Form, post } from "./Form.js";
 
 const example4 = new RobJSApp('example4');
 example4.init('example4')
@@ -9,6 +9,6 @@ example4.init('example4')
 // then attach your custom functions to that object
 example4.registerComponent(Form, 'Form', [])
 example4.Form = {}
-example4.Form.submit = submit
+example4.Form.post = post
 
 example4.render(Form)
