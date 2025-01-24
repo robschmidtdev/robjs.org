@@ -57,9 +57,10 @@
 
   <br>
   <div class="text-bg-dark text-white p-4 mb-2">
-    <h1 class="mb-4">Example: Menu</h1>
-    <p class="mb-2">In this example we build a simple menu with RobJS.<br>
-      The way of doing it is very similar to the conditional style rendering but now we render whole components instead.
+    <h1 class="mb-4">Example: Component Composition</h1>
+    <p class="mb-2">In this next example we do essentially similar things but we incorporate composition of components.<br>
+        That is a huge benefit as we only need to write things once but can use it multiple times.<br>
+        The idea is to have a select menu and depending on what is selected we will show a different set of checkboxes.
     </p>
     <p>1. Start with the usual index.html-file where you define a div-Tag with an id of your choice.</p>
     <pre class="mb-4">
@@ -75,58 +76,97 @@
     <code class="language-javascript">
 // app.js
 import { RobJSApp } from "./Rob.js";
-import { Menu } from "./Menu.js";
+import { Dropdown } from "./Dropdown.js";
 
 const app = new RobJSApp('myapp');
 app.init('app')
-app.defineStateVar('menu', 'menuPoint1');
-app.registerComponent(Menu, 'Menu', ['menu'])
-app.render(Menu)  
+app.defineStateVar('dropdown', 'All Dishes');
+app.registerComponent(Dropdown, 'Dropdown', ['dropdown'])
+app.render(Dropdown)
     </code>
     </pre>
 
-    <p class="mb-4">3. Create a file called Menu.js where we define three components.</p>
+    <p class="mb-4">3. Create a component called CheckboxesMeat and another component called CheckboxesVeggie.</p>
     <pre class="mb-4">
     <code class="language-javascript">
-// Menu.js
+// CheckboxesMeat.js
+export const CheckboxesMeat = () => {
+    return `
+      &lt;div class="CheckboxesMeat"&gt;
+        &lt;input type="checkbox">Beef&lt;/input&gt;
+        &lt;input type="checkbox">Pork&lt;/input&gt;
+      &lt;/div&gt;
+    `
+};
 
-// In this simple example these two menu points do not need to be registered as a component as they do not contain state variables.
-// In a real project these would probably be bigger and composed components and would reside most likely in their own seperate files.
-const MenuPoint1 = () => `&lt;h1&gt;This is Menu Point 1&lt;/h1&gt;`;
-const MenuPoint2 = () => `&lt;h1&gt;And this Menu Point 2&lt;/h1&gt;`;
+// CheckboxesVeggie.js
+export const CheckboxesVeggie = () => {
+    return `
+      &lt;div class="CheckboxesVeggie"&gt;
+        &lt;input type="checkbox">Couscous&lt;/input&gt;
+        &lt;input type="checkbox">Bulgur&lt;/input&gt;
+      &lt;/div&gt;
+    `
+};
+    </code>
+    </pre>
 
-export const Menu = () => {
+    <p class="mb-4">4. In the component called CheckboxesAll we combine both.</p>
+    <pre class="mb-4">
+    <code class="language-javascript">
+// CheckboxesAll.js
+import { CheckboxesMeat } from "./CheckboxesMeat.js";
+import { CheckboxesVeggie } from "./CheckboxesVeggie.js";
 
-    let menupoint
-    if (app.state.menu === 'menuPoint1') {
-        menupoint = MenuPoint1()
+export const CheckboxesAll = () => {
+    return `
+      ${CheckboxesMeat()}
+      ${CheckboxesVeggie()}
+    `
+};
+    </code>
+    </pre>
+
+    <p class="mb-4">5. Finally we create our select component (we called it Dropdown in this case) that decides which combination to render.</p>
+    <pre class="mb-4">
+    <code class="language-javascript">
+// Dropdown.js
+import { CheckboxesAll } from "./CheckboxesAll.js";
+import { CheckboxesMeat } from "./CheckboxesMeat.js";
+import { CheckboxesVeggie } from "./CheckboxesVeggie.js";
+
+export const Dropdown = () => {
+
+    let checkboxes
+    if (app.state.dropdown === 'All Dishes') {
+        checkboxes = `${CheckboxesAll()}`
+    } else if (app.state.dropdown === 'Meat Dishes') {
+        checkboxes = `${CheckboxesMeat()}`
     } else {
-        menupoint = MenuPoint2()
+        checkboxes = `${CheckboxesVeggie()}`
     }
         
     return `
-        &lt;div class="Menu"&gt;
-        &lt;ul&gt;
-            &lt;li>
-                &lt;a onclick="app.updateState('menu', 'menuPoint1')">MenuPoint1&lt;/a&gt;
-            &lt;/li&gt;
-            &lt;li&gt;
-                &lt;a onclick="app.updateState('menu', 'menuPoint2')">MenuPoint2&lt;/a&gt;
-            &lt;/li&gt;
-        &lt;/ul&gt;
-        ${menupoint}
+        &lt;div class="Dropdown"&gt;
+        &lt;select onchange="app.updateState('dropdown', this.value)"&gt;
+            &lt;option value="All Dishes" ${app.state.dropdown === 'All Dishes' && 'selected'}>All Dishes&lt;/option&gt;
+            &lt;option value="Meat Dishes" ${app.state.dropdown === 'Meat Dishes' && 'selected'}>Meat Dishes&lt;/option&gt;
+            &lt;option value="Veggie Dishes" ${app.state.dropdown === 'Veggie Dishes' && 'selected'}>Veggie Dishes&lt;/option&gt;
+        &lt;/select&gt;
+        ${checkboxes}
         &lt;/div&gt;
     `
 };
     </code>
     </pre>
 
-    <p class="mb-4">4. With a bit of styling it looks and works like this.</p>
 
-    <div class="bg-light p-4 text-center mb-4">
-      <div id="example2"></div>
+    <p class="mb-4">6. With a bit of styling it looks and works like this.</p>
+
+    <div class="bg-light p-4 mb-4">
+      <div id="example3"></div>
     </div>
-    <script type="module" src="./examples/example2/example2.js"></script>
+    <script type="module" src="./examples/example3/example3.js"></script>
 
 
     

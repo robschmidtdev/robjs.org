@@ -1,5 +1,5 @@
-const MenuPoint1 = () => `<h1>MenuPoint1</h1>`;
-const MenuPoint2 = () => `<h1>MenuPoint2</h1>`;
+const MenuPoint1 = () => `<h1>This is Menu Point 1</h1>`;
+const MenuPoint2 = () => `<h1>And this Menu Point 2</h1>`;
 
 export const Menu = () => {
 
