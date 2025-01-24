@@ -5,6 +5,12 @@ export const submit = () => {
   const emailInput = document.getElementById("email")
   const passwordInput = document.getElementById("pwd")
 
+  const txtInput = document.getElementById("txt")
+  const txt = txtInput.value
+  console.log(txt)
+  txtInput.value = ""
+  txtInput.blur()
+
   const email = emailInput.value
   const password = passwordInput.value
 
@@ -32,6 +38,10 @@ export const Form = () => {
           <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
         </div>
         <button class="btn btn-primary" onclick="example4.Form.submit()">Login</button> <!-- used here -->
+        <div class="mb-3">
+          <label for="txt" class="form-label text-dark">txt:</label>
+          <input type="text" class="form-control" id="txt" placeholder="Enter txt" name="pswd">
+        </div>
       </div>
     `
 };
