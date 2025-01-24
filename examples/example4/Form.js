@@ -1,12 +1,20 @@
 // Form.js
 
 export const submit = () => {
-  const email = document.getElementById("email").value
-  const password = document.getElementById("pwd").value
+  // Get the values of the email and password inputs
+  const emailInput = document.getElementById("email")
+  const passwordInput = document.getElementById("pwd")
 
-  // make an api call and perform a login
+  const email = emailInput.value
+  const password = passwordInput.value
+
+  // make f.e. an API call to perform a login
   console.log("Email:", email)
   console.log("Password:", password)
+
+  // Clear the input fields
+  emailInput.value = ""
+  passwordInput.value = ""
 }
 
 export const Form = () => {
