@@ -15,6 +15,9 @@ export const submit = () => {
   // Clear the input fields
   emailInput.value = ""
   passwordInput.value = ""
+
+  emailInput.blur();
+  passwordInput.blur();
 }
 
 export const Form = () => {
