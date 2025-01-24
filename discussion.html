@@ -113,7 +113,7 @@ console.log(app)
 export class RobJSApp {
   ...
 
-  // This line of code makes your app variable available in the whole project.
+  // This next line of code makes your app variable available in the whole project.
   // The window object is the global object in browser-based JavaScript environments. Adding properties to window essentially creates global variables.
   // A drawback to this is that you could overwrite it accidentially so be aware of that.
 
@@ -134,7 +134,7 @@ app.init('app')
 export class RobJSApp {
   ...
 
-  // We use this function to create an entry into our state object with a key and a inital value.
+  // We use this next function to create an entry into our state object with a key and a inital value.
   // We do the same to the old state object to make it available there as well.
   // You can create state variables in all possible fashions (see usage).
 
@@ -161,8 +161,8 @@ app.defineStateVar('data', [{'name': 'Jane', 'age': 23}, {...}, ...])
 export class RobJSApp {
   ...
 
-  // We use this function to register an component to our app.
-  // We must pass the viewFunction which is essentially an JavaScript function returning html (we call this 'component').
+  // We use this next function to register an component to our app.
+  // We must pass the viewFunction which is essentially a JavaScript function that returns html (we call this 'component').
   // We must wrap it inside a div and give it a classname, because the Framework will find this component later by that classname in the DOM to update it.
   // Further we can decide on which changes of state it should re-render by passing an array with the names of the state variables. 
   // Oftentimes these would be at least the state variables that are used in the component but it is not limited to that.
@@ -196,7 +196,7 @@ app.registerComponent(MyComponent, 'MyComponent', ['name', 'age'])
 export class RobJSApp {
   ...
 
-  // The render function is mainly used to render the app for the first time into the html element with our tagId. 
+  // The render function then is mainly used to render the app for the first time into the html element with our tagId. 
   // Usually it would do so with the component that wraps all other components and is the main entry point.
   // So pass the component that you want to see when the page is loaded.
 
