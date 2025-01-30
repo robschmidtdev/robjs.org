@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="mystyle.css">
-    <link rel="icon" type="image/x-icon" href="./dev/red_box_cutted.svg">
+    <link href="prism.css" rel="stylesheet" />
     <title>RobJS.org</title>
 </head>
 <body class="container">
@@ -37,12 +37,9 @@
               <li><a class="dropdown-item" href="example1.html">Example: Conditional Style Rendering</a></li>
               <li><a class="dropdown-item" href="example2.html">Example: Menu</a></li>
               <li><a class="dropdown-item" href="example3.html">Example: Component Composition</a></li>
-              <li><a class="dropdown-item" href="example7.html">Example: Components with Parameters</a></li>
-              <li><a class="dropdown-item" href="example8.html">Example: Components consuming State</a></li>
               <li><a class="dropdown-item" href="example4.html">Example: Forms</a></li>
               <li><a class="dropdown-item" href="example5.html">Example: Talking to an API</a></li>
               <li><a class="dropdown-item" href="example6.html">Example: Mimic useEffect</a></li>
-              <li><a class="dropdown-item" href="example9.html">Example: Multiple Apps in one Page</a></li>
               <li><a class="dropdown-item" href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/" target="_blank">Example: Simple Todo App</a></li>
             </ul>
           </li>
@@ -58,33 +55,53 @@
   </nav>
 
   <br>
+  <div class="text-bg-dark text-white p-4 mb-2">
+    <h1 class="mb-4">Example: Components consuming State</h1>
+    <p class="mb-2">Additionally to receive arguments (which are more or less constant), a component can also consume different dynamic state variables as arguments.
+      <br> That empowers you to pass state from component to component in whatever fashion you want.
+    </p>
+    <p>1. Start with the usual index.html-file where you define a div-Tag with an id of your choice.</p>
+    <pre class="mb-4">
+    <code class="language-html">
+&lt;!-- index.html --&gt;
+&lt;div id="myapp"&gt;&lt;/div&gt;
+&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+    </code>
+    </pre>
 
-    <div class="text-bg-dark text-white p-4 mb-2">
-      <p>RobJS is a lightweight (less than 30 lines of code, ~1kB) JavaScript framework designed for developers who value simplicity, speed and control.</p> 
-      <p>Built to keep the essence of modern UI development without unnecessary complexity, RobJS empowers you to:</p>
+    <p class="mb-4">2. In app.js, we set up our project as usual.<br>
+        We create a state variable that will hold the data we are going to fetch.<br>
+    </p>
+    <pre class="mb-4">
+    <code class="language-javascript">
+// app.js
+    </code>
+    </pre>
+
+    <p class="mb-4">3. Create a component called DisplayPlanets and the function called fetchPlanets that will make the API call and update the state.<br>
+        The updated state will cause a re-render and the data will be displayed.
+    </p>
+    <pre class="mb-4">
+    <code class="language-javascript">
+    </code>
+    </pre>
+
+    <p class="mb-4">4. With a bit of styling it looks and works like this.</p>
+
+    <div class="bg-light p-4 text-center mb-4">
+      <div id="example8"></div>
     </div>
-  
-    <div class="text-bg-light p-4 mb-2">
-      <h5># Define Views and Components with Ease</h5>
-      <p class="mb-4">Create modular, reusable components and compose dynamic views effortlessly with a React-ish developer experience.</p>
+    <script type="module" src="./examples/example8/example8.js"></script>
 
-      <h5># State-Driven Rendering</h5>
-      <p class="mb-4">Automatically update only the parts of your UI that need it, optimizing performance.</p>
 
-      <h5># Stay in Control</h5>
-      <p class="mb-4">No virtual DOM. No bloated libraries. Just plain, efficient JavaScript.</p>
-
-      <h5># Extensible by Design</h5>
-      <p class="mb-4">Add your custom logic and extend functionality with no setup.</p>
-    </div>
-
-    <p class="text-bg-dark text-white p-4">Whether you are prototyping a quick idea or crafting a focused application, RobJS gives you the tools to move fast, with minimal overhead but maximum clarity!</p>
-
+    
     <div class="mt-5 p-4 bg-dark text-white text-center">
       <p>© <span id="year"></span> - RobJS.org - All rights reserved</p>
     </div>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
+
+    <script src="prism.js"></script>
 </body>
 </html>

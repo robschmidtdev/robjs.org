@@ -1,0 +1,6 @@
+all console.logs to alerts() (wo es sinnvoll ist)
+
+schauen ob ich consistent mit ' oder " bin
+überschrift der seite auch als backlink to home
+
+discussion soll explanantion heißen

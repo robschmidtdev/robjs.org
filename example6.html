@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="mystyle.css">
+    <link href="prism.css" rel="stylesheet" />
+    <title>RobJS.org</title>
+</head>
+<body class="container">
+  <a href="index.html">
+    <img src="./dev/black_cutted.svg" alt="logo">
+  </a>
+  <div class="text-bg-dark text-white p-4">
+    <h2>The Minimalists JavaScript Framework</h2>
+  </div>
+
+  <nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="getstarted.html">Get Started</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Examples</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="example1.html">Example: Conditional Style Rendering</a></li>
+              <li><a class="dropdown-item" href="example2.html">Example: Menu</a></li>
+              <li><a class="dropdown-item" href="example3.html">Example: Component Composition</a></li>
+              <li><a class="dropdown-item" href="example4.html">Example: Forms</a></li>
+              <li><a class="dropdown-item" href="example5.html">Example: Talking to an API</a></li>
+              <li><a class="dropdown-item" href="example6.html">Example: Mimic useEffect</a></li>
+              <li><a class="dropdown-item" href="https://robschmidtinfo.github.io/simple-todo-app-made-with-robjs/" target="_blank">Example: Simple Todo App</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="discussion.html">Discussion</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://robjs.creator-spring.com/" target="_blank">Merch</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <br>
+  <div class="text-bg-dark text-white p-4 mb-2">
+    <h1 class="mb-4">Example: Mimic useEffect</h1>
+    <p class="mb-2">In this next example we we want to mimic React's useEffect Hook which is used
+      to trigger certain functions only on the first render or only when certain state variables change.<br>
+        Which RobJS we can achieve this behaviour in a very straight forward way and it is even more versatile.
+    </p>
+    <p>1. Start with the usual index.html-file where you define a div-Tag with an id of your choice.</p>
+    <pre class="mb-4">
+    <code class="language-html">
+&lt;!-- index.html --&gt;
+&lt;div id="myapp"&gt;&lt;/div&gt;
+&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+    </code>
+    </pre>
+
+    <p class="mb-4">2. In app.js, we set up our project as usual.<br>
+        We create a state variable that will hold the data we are going to fetch.<br>
+    </p>
+    <pre class="mb-4">
+    <code class="language-javascript">
+// app.js
+import { RobJSApp } from "./Rob.js";
+import { DisplayPlanets, fetchPlanets } from "./DisplayPlanets.js";
+
+const app = new RobJSApp('myapp');
+app.init('app')
+
+app.defineStateVar('planets', []);
+app.registerComponent(DisplayPlanets, 'DisplayPlanets', ['planets'])
+app.DisplayPlanets = {}
+app.DisplayPlanets.fetchPlanets = fetchPlanets
+
+app.render(DisplayPlanets)
+    </code>
+    </pre>
+
+    <p class="mb-4">3. Create a component called DisplayPlanets and the function called fetchPlanets that will make the API call and update the state.<br>
+        The updated state will cause a re-render and the data will be displayed.
+    </p>
+    <pre class="mb-4">
+    <code class="language-javascript">
+// DisplayPlanets.js
+
+export const fetchPlanets = async () => {
+    try {
+        // Fetching planets from SWAPI and passing it into a state variable
+        const response = await fetch('https://swapi.dev/api/planets/')
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`)
+        }
+        const data = await response.json()
+        app.updateState('planets', data.results)
+    } catch (error) {
+        console.error('Error fetching planets:', error)
+    } 
+}
+
+export const DisplayPlanets = () => {
+
+    const list = app.state.planets.map(planet => `&lt;li&gt;Name: ${planet.name}, Population: ${planet.population}, Terrain: ${planet.terrain}&lt;/li&gt;`).join('')
+
+    return `
+        &lt;div class="DisplayPlanets"&gt;
+            &lt;button onclick="app.DisplayPlanets.fetchPlanets()"&gt;Get Planets&lt;/button&gt;
+            ${app.state.planets.length > 0 ? `&lt;ul&gt;${list}&lt;/ul&gt;` : ''}
+        &lt;/div&gt;
+    `
+};
+    </code>
+    </pre>
+
+    <p class="mb-4">4. With a bit of styling it looks and works like this.</p>
+
+    <div class="bg-light p-4 text-center mb-4">
+      <div id="example6"></div>
+    </div>
+    <script type="module" src="./examples/example6/example6.js"></script>
+
+
+    
+    <div class="mt-5 p-4 bg-dark text-white text-center">
+      <p>© <span id="year"></span> - RobJS.org - All rights reserved</p>
+    </div>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+
+    <script src="prism.js"></script>
+</body>
+</html>
