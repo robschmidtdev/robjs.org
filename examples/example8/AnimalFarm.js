@@ -1,17 +1,21 @@
+import { Cat } from "./Cat.js";
+import { Dog } from "./Dog.js";
 import { Feeder } from "./Feeder.js";
-import { Fish } from "./Fish.js";
 
-export const Pond = () => {
+export const AnimalFarm = () => {
     return `
         <div class="row">
             <div class="col">
                 ${Feeder("feeder1")}
             </div>
             <div class="col">
-                ${Fish("fish1")}
+                ${Dog("dog1")}
             </div>
             <div class="col">
-                ${Fish("fish2")}
+                ${Dog("dog2")}
+            </div>
+            <div class="col">
+                ${Cat("cat1")}
             </div>
         </div>
     `

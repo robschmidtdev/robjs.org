@@ -58,7 +58,8 @@
   <div class="text-bg-dark text-white p-4 mb-2">
     <h1 class="mb-4">Example: Components consuming State</h1>
     <p class="mb-2">Additionally to receive arguments (which are more or less constant), a component can also consume different dynamic state variables as arguments.
-      <br> That empowers you to pass state from component to component in whatever fashion you want.
+      <br> That empowers you to pass state from component to component in whatever fashion you want.<br>
+      You can f.e. pass a different state to equal components or the same state to different components anywhere in the DOM (which is not possible in many other frameworks).
     </p>
     <p>1. Start with the usual index.html-file where you define a div-Tag with an id of your choice.</p>
     <pre class="mb-4">
@@ -70,19 +71,88 @@
     </pre>
 
     <p class="mb-4">2. In app.js, we set up our project as usual.<br>
-        We create a state variable that will hold the data we are going to fetch.<br>
+        We import the components Feeder, Dog, Cat and a Wrapper called AnimalFarm. <br>
+        Notice that the dog named Max is only listening to food while Milo and the cat Misty are listening to both state variables food and extraFood.
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
+import { RobJSApp } from "../../Rob.js";
+import { AnimalFarm } from "./AnimalFarm.js";
+import { Cat } from "./Cat.js";
+import { Dog } from "./Dog.js";
+import { Feeder } from "./Feeder.js";
+
+const app = new RobJSApp('myapp');
+app.init('app')
+
+app.defineStateVar('food', 0);
+app.defineStateVar('extraFood', 0);
+
+app.registerComponent(Feeder, 'feeder1', ['food', 'extraFood'])
+app.registerComponent(Dog, 'dog1', ['food'], 'Max')
+app.registerComponent(Dog, 'dog2', ['food', 'extraFood'], 'Milo')
+app.registerComponent(Cat, 'cat1', ['food', 'extraFood'], 'Misty')
+
+app.initialRender(AnimalFarm)
     </code>
     </pre>
 
-    <p class="mb-4">3. Create a component called DisplayPlanets and the function called fetchPlanets that will make the API call and update the state.<br>
-        The updated state will cause a re-render and the data will be displayed.
+    <p class="mb-4">3. In our components we need to define our state variables as parameters <u>after</u> the constant parameters. <br/>
+      Also keep the same order as you registered the state variables in the registerComponent-function state variables array.
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
+// Dog.js
+export const Dog = (id, name, food, extraFood) => {
+
+  if(!extraFood){
+    extraFood = 0
+  }
+
+  return `
+      &lt;div id=${id}&gt;
+          &lt;p&gt;Dog: ${name}&lt;/p&gt;
+          &lt;p&gt;Food received: ${food + extraFood}&lt;/p&gt;
+      &lt;/div&gt;
+  `
+};
+
+// Cat.js
+export const Cat = (id, name, food, extraFood) => {
+  return `
+      &lt;div id=${id}&gt;
+          &lt;p&gt;Cat: ${name}&lt;/p&gt;
+          &lt;p&gt;Food received: ${food + extraFood}&lt;/p&gt;
+      &lt;/div&gt;
+  `
+};
+
+// Feeder.js
+export const Feeder = (id) => {
+  return `
+      &lt;div id=${id}&gt;
+          &lt;button onclick="app.updateState('food', app.state.food + 1)">Give food (${app.state.food})&lt;/button&gt;
+          &lt;button onclick="app.updateState('extraFood', app.state.extraFood + 1)">Give extra food (${app.state.extraFood})&lt;/button&gt;
+      &lt;/div&gt;
+  `
+};
+
+// AnimalFarm.js
+import { Cat } from "./Cat.js";
+import { Dog } from "./Dog.js";
+import { Feeder } from "./Feeder.js";
+
+export const AnimalFarm = () => {
+    return `
+        &lt;div&gt;
+          ${Feeder("feeder1")}
+          ${Dog("dog1")}
+          ${Dog("dog2")}
+          ${Cat("cat1")}
+        &lt;/div&gt;
+    `
+};
     </code>
     </pre>
 
