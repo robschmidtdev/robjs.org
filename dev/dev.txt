@@ -1,6 +1,10 @@
+get startet durchgehen
+dann alle examples updaten
+mimic useEffect updaten
+
 all console.logs to alerts() (wo es sinnvoll ist)
 
-schauen ob ich consistent mit ' oder " bin
+schauen ob ich consistent mit ' oder " bin: Regel: ""=inner, ''=outer, keine Semicolons
 überschrift der seite auch als backlink to home
 
 discussion soll explanantion heißen

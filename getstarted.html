@@ -91,7 +91,7 @@
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js"
+import { RobJSApp } from './Rob.js'
 
 const app = new RobJSApp('myapp') // pass your tag id
 app.init('app') // pass same name as your app variable as argument
@@ -101,22 +101,32 @@ app.defineStateVar('count', 0)
 
 // Define a component as a normal JavaScript function that returns an html string (recommend: do this in a separate file and import it)
 // The component should update automatically when the state changes 
-// -> Therefore you must wrap the returning html in a div and give it a classname
-const Counter = () => {
+// -> Therefore you must wrap the returning html in a div and give it an id passed as an argument
+const Counter = (id) => {
   return `
-    &lt;div class="Counter"&gt; 
-      &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+    &lt;div id="${id}"&gt; 
+      &lt;button onclick='app.updateState("count", app.state.count - 1)'&gt;-&lt;/button&gt;
       ${app.state.count}
-      &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+      &lt;button onclick='app.updateState("count", app.state.count + 1)'&gt;+&lt;/button&gt;
     &lt;/div&gt;
   `;
 };
 
-// Register the component, pass the component function, the classname and an array of state variables it listens to
-app.registerComponent(Counter, 'Counter', ['count'])
+// Register the component, pass the component function, the id and an array of state variables it listens to
+app.registerComponent(Counter, 'counter1', ['count'])
 
-// Start your app with an initial render of the component
-app.render(Counter) 
+// Further we can create a little Wrapper called App that just holds the Counter component and acts as an entry point of the app.
+// As the Wrapper is not dependent on a state variable itself, it neither needs an id nor needs to be registered as a component.
+const App = () => {
+  return `
+    &lt;div&gt; 
+      ${Counter('counter1')}
+    &lt;/div&gt;
+  `;
+};
+
+// Start your app with an initial render
+app.initialRender(App) 
     </code>
     </pre>
 

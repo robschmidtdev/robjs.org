@@ -68,18 +68,62 @@
     </pre>
 
     <p class="mb-4">2. In app.js, we set up our project as usual.<br>
-        ...<br>
+        But now when we register our components, we pass further arguments, in this case a name and a function name.<br>
+        We can create custom functions by simply attaching an empty object to our app and attach a function to that.
+        By doing it like that we avoid naming conflicts.<br>
+        It is not necessary to define the functions in this file as we did for this simple example. Normally you would do this in a seperate file and just import it to 
+        keep app.js as clean as possible.
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
+import { RobJSApp } from "./Rob.js";
+import { Dog } from "./Dog.js";
+import { Dogshouse } from "./Dogshouse.js";
+
+const app = new RobJSApp('myapp');
+app.init('app')
+
+app.Dog = {}
+app.Dog.maxSound = (name) => alert('Wuff, I am ' + name)
+app.Dog.bellaSound = (name) => alert('Wau, I am ' + name')
+
+app.registerComponent(Dog, 'dog1', [], 'Max', "app.Dog.maxSound")
+app.registerComponent(Dog, 'dog2', [], 'Bella', "app.Dog.bellaSound")
+
+app.initialRender(Dogshouse)
     </code>
     </pre>
 
-    <p class="mb-4">3. ...
+    <p class="mb-4">3. Next we create our components Dog and Dogshouse.<br>
+      As Dogshouse is essentially only a Wrapper for two Dog components and as it contains no state, it does not 
+      need to be registered as a component and also does not need an id.<br>
+      The Dog component on the other hand receives additionally to an id also the name and sound and even uses the name as an argument for the sound function.<br>
+      Notice that in Dogshouse the Dogs only receive their id as an argument. All other arguments are passed automatically over the registerComponent function from app.js.
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
+// Dog.js
+export const Dog = (id, name, sound) => {
+  return `
+      &lt;div id=${id}&gt;
+        &lt;p>Dog's Name: ${name}&lt;/p&gt;
+        &lt;button onclick="${sound}('${name}')">Make Sound&lt;/button&gt;
+      &lt;/div&gt;
+  `
+};
+
+// Dogshouse.js
+import { Dog } from "./Dog.js";
+
+export const Dogshouse = () => {
+    return `
+        &lt;div&gt;
+          ${Dog("dog1")}
+          ${Dog("dog2")}
+        &lt;/div&gt;
+    `
+};
     </code>
     </pre>
 
