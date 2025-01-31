@@ -65,8 +65,8 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
@@ -74,14 +74,14 @@
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { Dropdown } from "./Dropdown.js";
+import { RobJSApp } from './Rob.js'
+import { Dropdown } from './Dropdown.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
-app.defineStateVar('dropdown', 'All Dishes');
-app.registerComponent(Dropdown, 'Dropdown', ['dropdown'])
-app.render(Dropdown)
+app.defineStateVar('dropdown', 'All Dishes')
+app.registerComponent(Dropdown, 'dropdown1', ['dropdown'])
+app.initialRender(Dropdown, 'dropdown1')
     </code>
     </pre>
 
@@ -91,9 +91,9 @@ app.render(Dropdown)
 // CheckboxesMeat.js
 export const CheckboxesMeat = () => {
     return `
-      &lt;div class="CheckboxesMeat"&gt;
-        &lt;input type="checkbox">Beef&lt;/input&gt;
-        &lt;input type="checkbox">Pork&lt;/input&gt;
+      &lt;div&gt;
+        &lt;input type='checkbox'>Beef&lt;/input&gt;
+        &lt;input type='checkbox'>Pork&lt;/input&gt;
       &lt;/div&gt;
     `
 };
@@ -101,9 +101,9 @@ export const CheckboxesMeat = () => {
 // CheckboxesVeggie.js
 export const CheckboxesVeggie = () => {
     return `
-      &lt;div class="CheckboxesVeggie"&gt;
-        &lt;input type="checkbox">Couscous&lt;/input&gt;
-        &lt;input type="checkbox">Bulgur&lt;/input&gt;
+      &lt;div&gt;
+        &lt;input type='checkbox'>Couscous&lt;/input&gt;
+        &lt;input type='checkbox'>Bulgur&lt;/input&gt;
       &lt;/div&gt;
     `
 };
@@ -114,8 +114,8 @@ export const CheckboxesVeggie = () => {
     <pre class="mb-4">
     <code class="language-javascript">
 // CheckboxesAll.js
-import { CheckboxesMeat } from "./CheckboxesMeat.js";
-import { CheckboxesVeggie } from "./CheckboxesVeggie.js";
+import { CheckboxesMeat } from './CheckboxesMeat.js'
+import { CheckboxesVeggie } from './CheckboxesVeggie.js'
 
 export const CheckboxesAll = () => {
     return `
@@ -130,11 +130,11 @@ export const CheckboxesAll = () => {
     <pre class="mb-4">
     <code class="language-javascript">
 // Dropdown.js
-import { CheckboxesAll } from "./CheckboxesAll.js";
-import { CheckboxesMeat } from "./CheckboxesMeat.js";
-import { CheckboxesVeggie } from "./CheckboxesVeggie.js";
+import { CheckboxesAll } from './CheckboxesAll.js'
+import { CheckboxesMeat } from './CheckboxesMeat.js'
+import { CheckboxesVeggie } from './CheckboxesVeggie.js'
 
-export const Dropdown = () => {
+export const Dropdown = (id) => {
 
     let checkboxes
     if (app.state.dropdown === 'All Dishes') {
@@ -146,11 +146,11 @@ export const Dropdown = () => {
     }
         
     return `
-        &lt;div class="Dropdown"&gt;
-        &lt;select onchange="app.updateState('dropdown', this.value)"&gt;
-            &lt;option value="All Dishes" ${app.state.dropdown === 'All Dishes' && 'selected'}>All Dishes&lt;/option&gt;
-            &lt;option value="Meat Dishes" ${app.state.dropdown === 'Meat Dishes' && 'selected'}>Meat Dishes&lt;/option&gt;
-            &lt;option value="Veggie Dishes" ${app.state.dropdown === 'Veggie Dishes' && 'selected'}>Veggie Dishes&lt;/option&gt;
+        &lt;div id=${id}&gt;
+        &lt;select onchange='app.updateState("dropdown", this.value)'&gt;
+            &lt;option value='All Dishes' ${app.state.dropdown === 'All Dishes' && 'selected'}>All Dishes&lt;/option&gt;
+            &lt;option value='Meat Dishes' ${app.state.dropdown === 'Meat Dishes' && 'selected'}>Meat Dishes&lt;/option&gt;
+            &lt;option value='Veggie Dishes' ${app.state.dropdown === 'Veggie Dishes' && 'selected'}>Veggie Dishes&lt;/option&gt;
         &lt;/select&gt;
         ${checkboxes}
         &lt;/div&gt;

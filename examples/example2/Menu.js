@@ -1,7 +1,7 @@
 const MenuPoint1 = () => `<h1>This is Menu Point 1</h1>`;
 const MenuPoint2 = () => `<h1>And this Menu Point 2</h1>`;
 
-export const Menu = () => {
+export const Menu = (id) => {
 
     let menupoint
     if (example2.state.menu === 'menuPoint1') {
@@ -11,7 +11,7 @@ export const Menu = () => {
     }
         
     return `
-      <div class="Menu">
+      <div id=${id}>
         <ul class="nav nav-pills">
             <li class="nav-item me-1">
                 <a style="cursor: pointer;" class="nav-link active" onclick="example2.updateState('menu', 'menuPoint1')">MenuPoint1</a>

@@ -1,10 +1,15 @@
-get startet durchgehen
-dann alle examples updaten
+alle examples updaten (bin mit 4. fertig aber die davor noch mit ' oder " durchsuchen)
+irgendwo noch sagen, dass die examples aufeinander aufbauen
 mimic useEffect updaten
 
 all console.logs to alerts() (wo es sinnvoll ist)
 
-schauen ob ich consistent mit ' oder " bin: Regel: ""=inner, ''=outer, keine Semicolons
+Regel: ""=inner, ''=outer, keine Semicolons
 überschrift der seite auch als backlink to home
 
 discussion soll explanantion heißen
+
+
+
+RobJS Repo mit getstartet updaten
+SimpleToDoApp updaten 

@@ -62,23 +62,26 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
-    <p class="mb-4">2. In app.js, we set up our project as follows.</p>
+    <p class="mb-4">2. In app.js, we set up our project as follows. <br>
+      Notice that if we do not use a wrapper component as an entry point but a stateful component directly, we must pass its id to the initialRender function as well.
+
+    </p>
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { Counter } from "./Counter.js";
+import { RobJSApp } from './Rob.js'
+import { Counter } from './Counter.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
-app.defineStateVar('count', 0);
-app.registerComponent(Counter, 'Counter', ['count'])
-app.render(Counter)  
+app.defineStateVar('count', 0)
+app.registerComponent(Counter, 'counter1', ['count'])
+app.initialRender(Counter, 'counter1')  
     </code>
     </pre>
 
@@ -86,23 +89,23 @@ app.render(Counter)
     <pre class="mb-4">
     <code class="language-javascript">
 // Counter.js
-const Counter = () => {
+const Counter = (id) => {
 
-    let style = "padding: 5px; border-radius: 5px;"
+    let style = 'padding: 5px; border-radius: 5px;'
     if(app.state.count >= 3 && app.state.count < 6){
-      style = style += "background-color: green;"
+      style = style += 'background-color: green;'
     } else if (app.state.count >= 6){
-      style = style += "background-color: red;"
+      style = style += 'background-color: red;'
     } else {
-      style = style += "background-color: yellow;"
+      style = style += 'background-color: yellow;'
     }
   
     return `
-      &lt;div class="Counter"&gt;
-        &lt;p style="${style}"&gt;I turn green after count is 3 and red after count is 6.&lt;/p&gt;
-        &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+      &lt;div id=${id}&gt;
+        &lt;p style='${style}'&gt;I turn green after count is 3 and red after count is 6.&lt;/p&gt;
+        &lt;button onclick='app.updateState("count", app.state.count - 1)'&gt;-&lt;/button&gt;
         ${app.state.count}
-        &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+        &lt;button onclick='app.updateState("count", app.state.count + 1)'&gt;+&lt;/button&gt;
       &lt;/div&gt;
     `;
 };

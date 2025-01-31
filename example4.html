@@ -64,32 +64,29 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
     <p class="mb-4">2. In app.js, we set up our project as usual.<br>
         Unlike common in other frameworks we do not need state for handling inputs (as html already does it).<br>
-        But we must register our custom functions so that they can be used in the component.
+        But we must attach our custom functions so that they can be used in the component.
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { Form, post } from "./Form.js";
+import { RobJSApp } from './Rob.js'
+import { Form, post } from './Form.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
 
-// register the component as usual
-// attach an empty object to the app with the same name as the component to avoid naming conflicts
-// then attach your function to that object
-app.registerComponent(Form, 'Form', [])
 app.Form = {}
 app.Form.post = post
+app.registerComponent(Form, 'form1', [])
 
-app.render(Form)
+app.initialRender(Form, 'form1')
     </code>
     </pre>
 
@@ -106,22 +103,21 @@ export const post = () => {
   const message = messageInput.value
 
   // make f.e. an API call to save the post
-  console.log(name)
-  console.log(message)
+  alert('Name: ' + name + ', Message: ' + message)
 
   // Clear the input fields
-  nameInput.value = ""
+  nameInput.value = ''
   nameInput.blur()
-  messageInput.value = ""
+  messageInput.value = ''
   messageInput.blur()
 }
 
-export const Form = () => {
+export const Form = (id) => {
     return `
-      &lt;div class="Form"&gt;
-        &lt;input type="text" id="name" placeholder="Enter name"&gt;
-        &lt;textarea rows="2" id="message" placeholder="Enter your message">&lt;/textarea&gt;
-        &lt;button onclick="example4.Form.post()">Post&lt;/button&gt; &lt;!-- used here --&gt;
+      &lt;div id=${id}&gt;
+        &lt;input type='text' id='name' placeholder='Enter name'&gt;
+        &lt;textarea rows='2' id='message' placeholder='Enter your message'>&lt;/textarea&gt;
+        &lt;button onclick='app.Form.post()'>Post&lt;/button&gt; &lt;!-- used here --&gt;
       &lt;/div&gt;
     `
 };

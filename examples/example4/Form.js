@@ -8,8 +8,7 @@ export const post = () => {
   const message = messageInput.value
 
   // make f.e. an API call to perform a login
-  console.log(name)
-  console.log(message)
+  alert('Name: ' + name + ', Message: ' + message)
 
   // Clear the input fields
   nameInput.value = ""
@@ -18,9 +17,9 @@ export const post = () => {
   messageInput.blur()
 }
 
-export const Form = () => {
+export const Form = (id) => {
     return `
-      <div class="Form">
+      <div id=${id}>
         <div class="mb-3 mt-3">
           <input type="text" class="form-control" id="name" placeholder="Enter name">
         </div>

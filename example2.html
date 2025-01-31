@@ -64,8 +64,8 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
@@ -73,14 +73,14 @@
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { Menu } from "./Menu.js";
+import { RobJSApp } from "./Rob.js"
+import { Menu } from "./Menu.js"
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
 app.defineStateVar('menu', 'menuPoint1');
-app.registerComponent(Menu, 'Menu', ['menu'])
-app.render(Menu)  
+app.registerComponent(Menu, 'menu1', ['menu'])
+app.initialRender(Menu, 'menu1')  
     </code>
     </pre>
 
@@ -90,11 +90,12 @@ app.render(Menu)
 // Menu.js
 
 // In this simple example these two menu points do not need to be registered as a component as they do not contain state variables.
+// They also do not need ids for that reason.
 // In a real project these would probably be bigger and composed components and would reside most likely in their own seperate files.
-const MenuPoint1 = () => `&lt;h1&gt;This is Menu Point 1&lt;/h1&gt;`;
-const MenuPoint2 = () => `&lt;h1&gt;And this Menu Point 2&lt;/h1&gt;`;
+const MenuPoint1 = () => `&lt;h1&gt;This is Menu Point 1&lt;/h1&gt;`
+const MenuPoint2 = () => `&lt;h1&gt;And this Menu Point 2&lt;/h1&gt;`
 
-export const Menu = () => {
+export const Menu = (id) => {
 
     let menupoint
     if (app.state.menu === 'menuPoint1') {
@@ -104,13 +105,13 @@ export const Menu = () => {
     }
         
     return `
-        &lt;div class="Menu"&gt;
+        &lt;div id=${id}&gt;
         &lt;ul&gt;
             &lt;li>
-                &lt;a onclick="app.updateState('menu', 'menuPoint1')">MenuPoint1&lt;/a&gt;
+                &lt;a onclick='app.updateState("menu", "menuPoint1")'>MenuPoint1&lt;/a&gt;
             &lt;/li&gt;
             &lt;li&gt;
-                &lt;a onclick="app.updateState('menu', 'menuPoint2')">MenuPoint2&lt;/a&gt;
+                &lt;a onclick='app.updateState("menu", "menuPoint2")'>MenuPoint2&lt;/a&gt;
             &lt;/li&gt;
         &lt;/ul&gt;
         ${menupoint}
