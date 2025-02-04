@@ -114,8 +114,8 @@ export const MimicUseEffect = (id) => {
 
     if(app.MimicUseEffect.firstRender){
       console.log('I only run on first render.')
-      app.MimicUseEffect.firstRender = false
       app.state.style = 'background-color: ' + createRandomColor()
+      app.MimicUseEffect.firstRender = false
     }
     
     if(app.state.count === 3){
