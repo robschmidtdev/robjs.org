@@ -1,15 +1,16 @@
-alle examples updaten (bin mit 4. fertig)
-irgendwo noch sagen, dass die examples aufeinander aufbauen
-mimic useEffect updaten
-
-all console.logs to alerts() (wo es sinnvoll ist)
-
+# rules
 Regel: ""=inner, ''=outer, keine Semicolons
-überschrift der seite auch als backlink to home
 
-discussion soll explanantion heißen
-
-
-
+#todo
+favicon überall (und ggf. besseres)
+get startet machen
+explanation machen
+merch seite fertig machen (weitere svgs ggf. notwendig)
 RobJS Repo mit getstartet updaten
 SimpleToDoApp updaten 
+alles nochmal kontrollieren
+
+#done
+überschrift der seite auch als backlink to home
+discussion soll explanantion heißen
+irgendwo noch sagen, dass die examples aufeinander aufbauen
