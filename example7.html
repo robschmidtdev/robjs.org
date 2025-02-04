@@ -62,8 +62,8 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
@@ -77,19 +77,19 @@
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { Dog } from "./Dog.js";
-import { Dogshouse } from "./Dogshouse.js";
+import { RobJSApp } from './Rob.js'
+import { Dog } from './Dog.js'
+import { Dogshouse } from './Dogshouse.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
 
 app.Dog = {}
 app.Dog.maxSound = (name) => alert('Wuff, I am ' + name)
 app.Dog.bellaSound = (name) => alert('Wau, I am ' + name)
 
-app.registerComponent(Dog, 'dog1', [], 'Max', "app.Dog.maxSound")
-app.registerComponent(Dog, 'dog2', [], 'Bella', "app.Dog.bellaSound")
+app.registerComponent(Dog, 'dog1', [], 'Max', 'app.Dog.maxSound')
+app.registerComponent(Dog, 'dog2', [], 'Bella', 'app.Dog.bellaSound')
 
 app.initialRender(Dogshouse)
     </code>
@@ -108,19 +108,19 @@ export const Dog = (id, name, sound) => {
   return `
       &lt;div id=${id}&gt;
         &lt;p>Dog's Name: ${name}&lt;/p&gt;
-        &lt;button onclick="${sound}('${name}')">Make Sound&lt;/button&gt;
+        &lt;button onclick='${sound}("${name}")'>Make Sound&lt;/button&gt;
       &lt;/div&gt;
   `
 };
 
 // Dogshouse.js
-import { Dog } from "./Dog.js";
+import { Dog } from './Dog.js'
 
 export const Dogshouse = () => {
     return `
         &lt;div&gt;
-          ${Dog("dog1")}
-          ${Dog("dog2")}
+          ${Dog('dog1')}
+          ${Dog('dog2')}
         &lt;/div&gt;
     `
 };

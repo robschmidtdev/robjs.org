@@ -65,8 +65,8 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
@@ -77,17 +77,17 @@
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { AnimalFarm } from "./AnimalFarm.js";
-import { Cat } from "./Cat.js";
-import { Dog } from "./Dog.js";
-import { Feeder } from "./Feeder.js";
+import { RobJSApp } from './Rob.js'
+import { AnimalFarm } from './AnimalFarm.js'
+import { Cat } from './Cat.js'
+import { Dog } from './Dog.js'
+import { Feeder } from './Feeder.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
 
-app.defineStateVar('food', 0);
-app.defineStateVar('extraFood', 0);
+app.defineStateVar('food', 0)
+app.defineStateVar('extraFood', 0)
 
 app.registerComponent(Feeder, 'feeder1', ['food', 'extraFood'])
 app.registerComponent(Dog, 'dog1', ['food'], 'Max')
@@ -132,24 +132,24 @@ export const Cat = (id, name, food, extraFood) => {
 export const Feeder = (id) => {
   return `
       &lt;div id=${id}&gt;
-          &lt;button onclick="app.updateState('food', app.state.food + 1)">Give food (${app.state.food})&lt;/button&gt;
-          &lt;button onclick="app.updateState('extraFood', app.state.extraFood + 1)">Give extra food (${app.state.extraFood})&lt;/button&gt;
+          &lt;button onclick='app.updateState("food", app.state.food + 1)'>Give food (${app.state.food})&lt;/button&gt;
+          &lt;button onclick='app.updateState("extraFood", app.state.extraFood + 1)'>Give extra food (${app.state.extraFood})&lt;/button&gt;
       &lt;/div&gt;
   `
 };
 
 // AnimalFarm.js
-import { Cat } from "./Cat.js";
-import { Dog } from "./Dog.js";
-import { Feeder } from "./Feeder.js";
+import { Cat } from './Cat.js'
+import { Dog } from './Dog.js'
+import { Feeder } from './Feeder.js'
 
 export const AnimalFarm = () => {
     return `
         &lt;div&gt;
-          ${Feeder("feeder1")}
-          ${Dog("dog1")}
-          ${Dog("dog2")}
-          ${Cat("cat1")}
+          ${Feeder('feeder1')}
+          ${Dog('dog1')}
+          ${Dog('dog2')}
+          ${Cat('cat1')}
         &lt;/div&gt;
     `
 };

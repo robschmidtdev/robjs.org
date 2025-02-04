@@ -64,8 +64,8 @@
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
@@ -75,18 +75,18 @@
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { DisplayPlanets, fetchPlanets } from "./DisplayPlanets.js";
+import { RobJSApp } from './Rob.js'
+import { DisplayPlanets, fetchPlanets } from './DisplayPlanets.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
 
-app.defineStateVar('planets', []);
-app.registerComponent(DisplayPlanets, 'DisplayPlanets', ['planets'])
+app.defineStateVar('planets', [])
+app.registerComponent(DisplayPlanets, 'dp1', ['planets'])
 app.DisplayPlanets = {}
 app.DisplayPlanets.fetchPlanets = fetchPlanets
 
-app.render(DisplayPlanets)
+app.initialRender(DisplayPlanets, 'dp1')
     </code>
     </pre>
 
@@ -111,13 +111,13 @@ export const fetchPlanets = async () => {
     } 
 }
 
-export const DisplayPlanets = () => {
+export const DisplayPlanets = (id) => {
 
     const list = app.state.planets.map(planet => `&lt;li&gt;Name: ${planet.name}, Population: ${planet.population}, Terrain: ${planet.terrain}&lt;/li&gt;`).join('')
 
     return `
-        &lt;div class="DisplayPlanets"&gt;
-            &lt;button onclick="app.DisplayPlanets.fetchPlanets()"&gt;Get Planets&lt;/button&gt;
+        &lt;div id=${id}&gt;
+            &lt;button onclick='app.DisplayPlanets.fetchPlanets()'&gt;Get Planets&lt;/button&gt;
             ${app.state.planets.length > 0 ? `&lt;ul&gt;${list}&lt;/ul&gt;` : ''}
         &lt;/div&gt;
     `

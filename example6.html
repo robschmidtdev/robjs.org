@@ -59,67 +59,81 @@
     <h1 class="mb-4">Example: Mimic useEffect</h1>
     <p class="mb-2">In this next example we we want to mimic React's useEffect Hook which is used
       to trigger certain functions only on the first render or only when certain state variables change.<br>
-        Which RobJS we can achieve this behaviour in a very straight forward way and it is even more versatile.
+        With RobJS we can achieve this behaviour in a very straight forward way and it is even more versatile.
     </p>
     <p>1. Start with the usual index.html-file where you define a div-Tag with an id of your choice.</p>
     <pre class="mb-4">
     <code class="language-html">
 &lt;!-- index.html --&gt;
-&lt;div id="myapp"&gt;&lt;/div&gt;
-&lt;script type="module" src="app.js"&gt;&lt;/script&gt;
+&lt;div id='myapp'&gt;&lt;/div&gt;
+&lt;script type='module' src='app.js'&gt;&lt;/script&gt;
     </code>
     </pre>
 
     <p class="mb-4">2. In app.js, we set up our project as usual.<br>
-        We create a state variable that will hold the data we are going to fetch.<br>
+        Additionally to two state variables, we also create a non state variable called firstRender that we attach to an empty object named similar to our component.<br>
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
 // app.js
-import { RobJSApp } from "./Rob.js";
-import { DisplayPlanets, fetchPlanets } from "./DisplayPlanets.js";
+import { RobJSApp } from './Rob.js'
+import { MimicUseEffect } from './MimicUseEffect.js'
 
-const app = new RobJSApp('myapp');
+const app = new RobJSApp('myapp')
 app.init('app')
 
-app.defineStateVar('planets', []);
-app.registerComponent(DisplayPlanets, 'DisplayPlanets', ['planets'])
-app.DisplayPlanets = {}
-app.DisplayPlanets.fetchPlanets = fetchPlanets
+app.defineStateVar('count', 0);
+app.defineStateVar('count2', 0);
+app.registerComponent(MimicUseEffect, 'mue1', ['count', 'count2'])
+app.MimicUseEffect = {}
+app.MimicUseEffect.firstRender = true
 
-app.render(DisplayPlanets)
+app.initialRender(MimicUseEffect, 'mue1')
     </code>
     </pre>
 
-    <p class="mb-4">3. Create a component called DisplayPlanets and the function called fetchPlanets that will make the API call and update the state.<br>
-        The updated state will cause a re-render and the data will be displayed.
+    <p class="mb-4">3. In our component MimicUseEffect we check the value of the firstRender variable and set it to false immediately after the component function runs for the first time.<br>
+        Further we can make the color of the element change when only count is equal to 3 (similar to conditional style rendering) but as we
+        also have access to the <u>old state</u>, we can decide that we just want to do certain things when a certain state variable changes.<br> 
     </p>
     <pre class="mb-4">
     <code class="language-javascript">
-// DisplayPlanets.js
+// MimicUseEffect.js
 
-export const fetchPlanets = async () => {
-    try {
-        // Fetching planets from SWAPI and passing it into a state variable
-        const response = await fetch('https://swapi.dev/api/planets/')
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`)
-        }
-        const data = await response.json()
-        app.updateState('planets', data.results)
-    } catch (error) {
-        console.error('Error fetching planets:', error)
-    } 
-}
+export const MimicUseEffect = (id) => {
 
-export const DisplayPlanets = () => {
+    const createRandomColor = () => {
+      return '#' + Math.floor(Math.random()*16777215).toString(16)
+    }
 
-    const list = app.state.planets.map(planet => `&lt;li&gt;Name: ${planet.name}, Population: ${planet.population}, Terrain: ${planet.terrain}&lt;/li&gt;`).join('')
+    if(app.MimicUseEffect.firstRender){
+      console.log('I only run on first render.')
+      app.MimicUseEffect.firstRender = false
+      app.state.style = 'background-color: ' + createRandomColor()
+    }
+    
+    if(app.state.count === 3){
+      console.log('I only run when count is 3.')
+      app.state.style = 'background-color: ' + createRandomColor()
+    }
+
+    if(app.oldState.count2 !== app.state.count2){
+      console.log('I only run when state of count 2 changes.')
+      app.state.style = 'background-color: ' + createRandomColor()
+    }
+
 
     return `
-        &lt;div class="DisplayPlanets"&gt;
-            &lt;button onclick="app.DisplayPlanets.fetchPlanets()"&gt;Get Planets&lt;/button&gt;
-            ${app.state.planets.length > 0 ? `&lt;ul&gt;${list}&lt;/ul&gt;` : ''}
+        &lt;div id=${id}&gt;
+          &lt;span style='${app.state.style}'>Random Color&lt;/span&gt;
+          Count 1:
+          &lt;button type='button' onclick='app.updateState("count", app.state.count - 1)'>-&lt;/button&gt;
+          ${app.state.count}
+          &lt;button type='button' onclick='app.updateState("count", app.state.count + 1)'>+&lt;/button&gt;
+          Count 2:
+          &lt;button type='button' onclick='app.updateState("count2", app.state.count2 - 1)'>-&lt;/button&gt;
+          ${app.state.count2}
+          &lt;button type='button' onclick='app.updateState("count2", app.state.count2 + 1)'>+&lt;/button&gt;
         &lt;/div&gt;
     `
 };

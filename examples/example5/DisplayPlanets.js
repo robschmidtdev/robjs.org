@@ -14,12 +14,12 @@ export const fetchPlanets = async () => {
   } 
 }
 
-export const DisplayPlanets = () => {
+export const DisplayPlanets = (id) => {
 
     const list = example5.state.planets.map(planet => `<li class="list-group-item">Name: ${planet.name}, Population: ${planet.population}, Terrain: ${planet.terrain}</li>`).join('');
 
     return `
-      <div class="DisplayPlanets">
+      <div id=${id}>
         <button class="btn btn-primary mb-2" onclick="example5.DisplayPlanets.fetchPlanets()">Get Planets</button>
         ${example5.state.planets.length > 0 ? `<ul class="text-dark list-group list-group-flush">${list}</ul>` : ''}
       </div>
