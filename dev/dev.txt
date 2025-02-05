@@ -1,16 +1,9 @@
 # rules
-Regel: ""=inner, ''=outer, keine Semicolons
+""=inner, ''=outer, no Semicolons
 
 #todo
-favicon überall (und ggf. besseres)
 get startet machen
 explanation machen
 merch seite fertig machen (weitere svgs ggf. notwendig)
 RobJS Repo mit getstartet updaten
-SimpleToDoApp updaten 
 alles nochmal kontrollieren
-
-#done
-überschrift der seite auch als backlink to home
-discussion soll explanantion heißen
-irgendwo noch sagen, dass die examples aufeinander aufbauen
