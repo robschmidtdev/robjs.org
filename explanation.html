@@ -58,34 +58,21 @@
 
       <div class="text-bg-dark text-white p-4 mb-2">
         <h1 class="mb-4">Explanation</h1>
-        <h2>Task was:</h2>
-        <p>Could we have a framework with a similar developer experience like React.js but build in the most simple way
-          With the least amount of JavaScript that is necessary and in a way that even a beginner programmer can understand 
-          the mechanics of the framework and can debug it and change it if needed.
-          Without package manager and the like. just a simple library that you use without changing the whole ecosystem.
-          makijng it simple, easy, versatile, understandable, changeable, elegant and powerful.
+        <h2>What is the point?</h2>
+        <p>There are many high-level frameworks out there (Angular, React, Vue, Svelte etc.) that often come bundled as entire ecosystems - demanding complex setups, build processes, and a rigid way of doing things that sometimes go against your logic. 
+          <br>You don't really know what's happening under the hood and it often feels like you're learning a whole new language 
+          when, in reality, you might ask yourself: <br>
+          <i>Shouldn't good old JavaScript already have everything?</i>
+          <br><br>
+          Imagine a framework with a similar developer experience like their big brothers - but made with just a handful (namely six) of fairly simple JavaScript functions. 
+          No package managers, no build tools needed - just one file you can drop into any project.<br>
+          Designed for clarity, it is intended that you can understand its mechanics, debug it effortlessly, and modify it as needed. It is simple yet powerful, easy to use yet endlessly flexible.
+          A tool that enhances your workflow without forcing you into an ecosystem - a framework that can feel truly yours!
         </p>
-        <p>
-          This Framework is intentionally build as simple as possible.<br>
-          But isn't that actually what we want from a Framework?<br>
-          We need to clarify: 
-        </p>
-        <h2>What is a Framework?</h2>
-        <p>A Framework is actually just a "way of doing things". So if you build an application using only the core language, you will most likely build a Framework, too.
-          Because you will do things a certain way. <br>
-          If you then build another app you might orientate yourself partly on the app you build before and copy some parts. These parts are your Framework.
-
-          <h2>What is the problem?</h2>
-          <p>Today there are so many Frameworks - ecspecially in the JavaScript World.</p>
-          ... you lose functionality or at least you have to apply a different way of logical thinking to get certain things done 
-          (that are not a foreseen way of the Framework). you operate with your hands behind a curtain
-          ... you are not the one who created it. you must learn their way. Some might like it, some dont? 
-        </p>
-        <h2>We have enough complicated Frameworks we don't really understand</h2>
         <h2>RobJS is easy to understand - on purpose</h2>
         <p>By going now through the whole implementation line by line you will be able to fully understand how it works under the hood.<br>
-          And you might be surprised how simple it actually is. You will also understand the drawbacks and might be able to work around it.<br>
-          After that you are really back into the drivers seat and have even the guts to break out and change the core if needed.
+          And you might be surprised how simple it actually is. You will also understand the drawbacks and but be enabled to find pragmatic solutions for your project.<br>
+          After that you are really back into the drivers seat and have even the guts to break out and change the core functions if needed.
         </p>
         <p>Lets dive in:</p>
 
@@ -172,11 +159,15 @@ export class RobJSApp {
 
   // We use this next function to register an component to our app.
   // We must pass the viewFunction which is essentially a JavaScript function that returns html (we call this 'component').
-  // We must wrap it inside a div and give it a classname, because the Framework will find this component later by that classname in the DOM to update it.
+  // We must wrap it inside a div and give it a id, because the Framework will find this component later by that id in the DOM to update it.
+  // A drawback here is that you need to be careful of not using ids more than once. Come up with a simple naming convention and it is no longer a problem.
+  // However, an advantage is that only components that should update need an id and must be registered. 
   // Further we can decide on which changes of state it should re-render by passing an array with the names of the state variables. 
   // Oftentimes these would be at least the state variables that are used in the component but it is not limited to that.
+  // Also, if the component consumes arguments (be it constants or state variables) they are registered into their component here as well.
+  // Therefore it is not needed to pass them later again whenever we use the component which keeps things very tidy.
 
-  registerComponent(viewFunction, className, usedStateKeys) { this.components.push({viewFunction, className, usedStateKeys}) }
+  registerComponent(viewFunction, id, usedStateKeys, ...args) { this.components.push({viewFunction, id, usedStateKeys, args}) }
   ...
 }
 
@@ -186,9 +177,10 @@ app.defineStateVar('name', 'Janis')
 app.defineStateVar('age', 30)
 
 // create a component
-const MyComponent () => {
+const MyComponent (id, isLegal) => {
+  if {!isLegal} return
   return `
-    &lt;div class="MyComponent"&gt; 
+    &lt;div id=${id}&gt; 
       &lt;p&gt;${app.state.name}&lt;/p&gt;
       &lt;p&gt;${app.state.age}&lt;/p&gt;  
     &lt;/div&gt;
@@ -196,7 +188,7 @@ const MyComponent () => {
 };
 
 // then register it
-app.registerComponent(MyComponent, 'MyComponent', ['name', 'age'])
+app.registerComponent(MyComponent, 'mycomponent1', ['name', 'age'], true)
       </code>
       </pre>
 
@@ -205,16 +197,22 @@ app.registerComponent(MyComponent, 'MyComponent', ['name', 'age'])
 export class RobJSApp {
   ...
 
-  // The render function then is mainly used to render the app for the first time into the html element with our tagId. 
+  // The initialRender function then is mainly used to render the app for the first time into the html element with our tagId. 
   // Usually it would do so with the component that wraps all other components and is the main entry point.
-  // So pass the component that you want to see when the page is loaded.
+  // If this is a component that is not directly using state, then there is no need to pass an id to this function.
 
-  render(viewFunction) { document.getElementById(this.tagId).innerHTML = viewFunction() }
+  // Further on the first render the updateComponent function (which is explained next) is called on all registered components. 
+  // -> basically feeding all components with their inital state values and other arguments.
+
+  initialRender(viewFunction, id=undefined) { 
+    document.getElementById(this.tagId).innerHTML = viewFunction(id)
+    this.components.forEach(component => this.updateComponent(component))
+  }
   ...
 }
 
 // usage
-app.render(MyComponent)
+app.initialRender(MyComponent, 'mycomponent1') // oftentimes it will be just a wrapper component on no id is required
 
     </code>
     </pre>
@@ -224,36 +222,60 @@ app.render(MyComponent)
 export class RobJSApp {
   ...
 
-  // The final thing is to manage the automatic update on state changes.
-  // We need to call this function whenever we want a re-render to happen.
-  // Pass the key or name of the state variable and the new value it should get.
-  // Notice that we create an old state by copying the current state before performing the update.
-  // Then we filter all the registered components to find the ones that listen to updates of this particular state variable (as defined before in registerComponent()).
-  // For all that are found, we find them in the DOM by their classname and re-render them by calling the viewFunction.
-  // The drawback here is that it will be rendered again inside the old div tag with the same classname. 
-  // So if you would take a look into the DOM you would suddenly find a div inside a div. 
-  // The reason to let it have that 'misbehaviour' is that it doesn't (usually) hurt and keeps things simpler.
+  // The updateComponent function is a key function managing the re-rendering in the DOM. 
+  // It finds the component by its id, creates it again temporarily by calling their viewfunction with all arguments and then replaces the old one.
 
-  updateState(key, newValue) {
-    this.oldState = this.state
-    this.state = { ...this.state, [key]: newValue }
-    this.components
-        .filter(comp => comp.usedStateKeys.includes(key))
-        .forEach(comp =>
-            document.querySelectorAll(`.${comp.className}`)
-                .forEach(el => el.innerHTML = comp.viewFunction())
-        );
+
+  updateComponent(component){
+    const el = document.getElementById(component.id)
+    const tempDiv = document.createElement("div")
+    const stateArgs = component.usedStateKeys.map(key => this.state[key])
+    tempDiv.innerHTML = component.viewFunction(component.id, ...component.args, ...stateArgs)
+    const newElement = tempDiv.firstElementChild
+    el.replaceWith(newElement)
   }
   ...
 }
 
 // usage
-const Counter = () => {
+// You can use this function everywhere you want by yourself. 
+// But mostly it will be called from within the framework in two places: 
+// The initialRender function (that we talked about above) and the updateState function (that we talk about next).
 
-  console.log(app.oldState.count) // oldState is available in your project
+    </code>
+    </pre>
+
+    <pre>
+    <code class="language-javascript">
+export class RobJSApp {
+  ...
+
+  // The final function is to manage the automatic update on state changes.
+  // We need to call this function whenever we want a re-render to happen.
+  // Pass the key or name of the state variable and the new value it should get.
+  // Notice that we create an old state by copying the current state before performing the update.
+  // Then we filter all the registered components to find the ones that listen to updates of this particular state variable (as defined before in registerComponent()).
+  // For all that are found, we call the updateComponent function on them - essentially triggering a re-render for them
+
+  updateState(key, newValue) {
+    this.oldState = this.state;
+    this.state = { ...this.state, [key]: newValue }
+    this.components
+      .filter(component => component.usedStateKeys.includes(key))
+      .forEach(component => {
+        this.updateComponent(component)
+      });
+  }
+  ...
+}
+
+// usage
+const Counter = (id) => {
+
+  console.log(app.oldState.count) // oldState is available and sometimes quite useful
 
   return `
-    &lt;div class="Counter"&gt; 
+    &lt;div id=${id}&gt; 
       &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
       ${app.state.count}
       &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
@@ -265,7 +287,7 @@ const Counter = () => {
     </pre>
 
     <div class="text-bg-dark text-white p-4 mb-2">
-      <p>And that is all there is to it. Roughly 30 lines of code. Elegant and powerful.</p>
+      <p>And that is all there is to it. Roughly 40 lines of code. Easy, elegant and powerful.</p>
     </div>
 
       </div>

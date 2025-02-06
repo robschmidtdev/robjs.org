@@ -2,8 +2,8 @@
 ""=inner, ''=outer, no Semicolons
 
 #todo
-get startet machen
-explanation machen
+isLegal testen
+rules beachtet be
 merch seite fertig machen (weitere svgs ggf. notwendig)
 RobJS Repo mit getstartet updaten
 alles nochmal kontrollieren
