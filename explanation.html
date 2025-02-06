@@ -178,7 +178,7 @@ app.defineStateVar('age', 30)
 
 // create a component
 const MyComponent (id, isLegal) => {
-  if {!isLegal} return
+  if {!isLegal} return `&lt;div id='${id}'&gt;&lt;/div&gt;`
   return `
     &lt;div id=${id}&gt; 
       &lt;p&gt;${app.state.name}&lt;/p&gt;
@@ -189,8 +189,8 @@ const MyComponent (id, isLegal) => {
 
 // then register it
 app.registerComponent(MyComponent, 'mycomponent1', ['name', 'age'], true)
-      </code>
-      </pre>
+    </code>
+    </pre>
 
     <pre>
     <code class="language-javascript">
