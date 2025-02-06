@@ -7,7 +7,7 @@ getstarted.defineStateVar('count', 0)
 
 const Counter = (id) => {
     return `
-      <div id='${id}'> 
+      <div id=${id}> 
         <button type='button' class='btn btn-danger' onclick='getstarted.updateState("count", getstarted.state.count - 1)'>-</button>
         <span class="text-dark">${getstarted.state.count}</span>
         <button type='button' class='btn btn-success' onclick='getstarted.updateState("count", getstarted.state.count + 1)'>+</button>

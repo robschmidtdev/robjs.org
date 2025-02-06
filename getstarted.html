@@ -106,7 +106,7 @@ app.defineStateVar('count', 0)
 // -> Therefore you must wrap the returning html in a div and give it an id passed as an argument
 const Counter = (id) => {
   return `
-    &lt;div id='${id}'&gt; 
+    &lt;div id=${id}&gt; 
       &lt;button onclick='app.updateState("count", app.state.count - 1)'&gt;-&lt;/button&gt;
       ${app.state.count}
       &lt;button onclick='app.updateState("count", app.state.count + 1)'&gt;+&lt;/button&gt;

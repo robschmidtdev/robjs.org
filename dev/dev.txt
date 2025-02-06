@@ -2,7 +2,6 @@
 ""=inner, ''=outer, no Semicolons
 
 #todo
-merch seite fertig machen (weitere svgs ggf. notwendig)
-RobJS Repo mit getstartet updaten
+merch seite fertig machen
 alles nochmal grob kontrollieren
 fertig - einen heben! 
