@@ -30,7 +30,7 @@ export class RobJSApp {
     }
     
     updateState(key, newValue) {
-      this.oldState = this.state;
+      this.oldState = this.state
       this.state = { ...this.state, [key]: newValue }
       this.components
         .filter(component => component.usedStateKeys.includes(key))

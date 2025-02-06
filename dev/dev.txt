@@ -2,7 +2,7 @@
 ""=inner, ''=outer, no Semicolons
 
 #todo
-rules beachtet bei explanation? 
 merch seite fertig machen (weitere svgs ggf. notwendig)
 RobJS Repo mit getstartet updaten
-alles nochmal kontrollieren
+alles nochmal grob kontrollieren
+fertig - einen heben! 

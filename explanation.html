@@ -258,7 +258,7 @@ export class RobJSApp {
   // For all that are found, we call the updateComponent function on them - essentially triggering a re-render for them
 
   updateState(key, newValue) {
-    this.oldState = this.state;
+    this.oldState = this.state
     this.state = { ...this.state, [key]: newValue }
     this.components
       .filter(component => component.usedStateKeys.includes(key))
@@ -276,9 +276,9 @@ const Counter = (id) => {
 
   return `
     &lt;div id=${id}&gt; 
-      &lt;button onclick="app.updateState('count', app.state.count - 1)"&gt;-&lt;/button&gt;
+      &lt;button onclick='app.updateState("count", app.state.count - 1)'&gt;-&lt;/button&gt;
       ${app.state.count}
-      &lt;button onclick="app.updateState('count', app.state.count + 1)"&gt;+&lt;/button&gt;
+      &lt;button onclick='app.updateState("count", app.state.count + 1)'&gt;+&lt;/button&gt;
     &lt;/div&gt;
   `;
 };
