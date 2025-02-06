@@ -2,6 +2,5 @@
 ""=inner, ''=outer, no Semicolons
 
 #todo
-merch seite fertig machen
 alles nochmal grob kontrollieren
 fertig - einen heben! 
