@@ -71,7 +71,7 @@
         </p>
         <h2>RobJS is easy to understand - on purpose</h2>
         <p>By going now through the whole implementation line by line you will be able to fully understand how it works under the hood.<br>
-          And you might be surprised how simple it actually is. You will also understand the drawbacks and but be enabled to find pragmatic solutions for your project.<br>
+          And you might be surprised how simple it actually is. You will also understand the drawbacks but be enabled to find pragmatic solutions for your project.<br>
           After that you are really back into the drivers seat and have even the guts to break out and change the core functions if needed.
         </p>
         <p>Lets dive in:</p>
@@ -212,7 +212,7 @@ export class RobJSApp {
 }
 
 // usage
-app.initialRender(MyComponent, 'mycomponent1') // oftentimes it will be just a wrapper component on no id is required
+app.initialRender(MyComponent, 'mycomponent1') // oftentimes it will be just a wrapper component and no id is required
 
     </code>
     </pre>
@@ -255,7 +255,7 @@ export class RobJSApp {
   // Pass the key or name of the state variable and the new value it should get.
   // Notice that we create an old state by copying the current state before performing the update.
   // Then we filter all the registered components to find the ones that listen to updates of this particular state variable (as defined before in registerComponent()).
-  // For all that are found, we call the updateComponent function on them - essentially triggering a re-render for them
+  // For all that are found, we call the updateComponent function on them - essentially triggering a re-render
 
   updateState(key, newValue) {
     this.oldState = this.state

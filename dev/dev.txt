@@ -2,5 +2,3 @@
 ""=inner, ''=outer, no Semicolons
 
 #todo
-alles nochmal grob kontrollieren
-fertig - einen heben! 
